@@ -1,0 +1,444 @@
+/* ========================================
+   RETRO SHOP
+======================================== */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+
+    background: #f4e8c1;
+
+    color: #2b2118;
+
+    font-family:
+        "Trebuchet MS",
+        "Segoe UI",
+        sans-serif;
+}
+
+
+/* ========================================
+   SHOP PAGE
+======================================== */
+
+.product-page {
+    min-height: calc(100vh - 70px);
+
+    padding: 55px 40px 80px;
+
+    background:
+        radial-gradient(
+            circle at 10% 10%,
+            rgba(212, 160, 23, 0.12),
+            transparent 25%
+        ),
+        #f4e8c1;
+}
+
+
+/* ========================================
+   HEADER
+======================================== */
+
+.shop-header {
+    max-width: 1200px;
+
+    margin: 0 auto 45px;
+}
+
+.shop-label {
+    margin-bottom: 8px;
+
+    color: #c65d3b;
+
+    font-family: monospace;
+
+    font-size: 12px;
+    font-weight: bold;
+
+    letter-spacing: 3px;
+}
+
+.shop-header h1 {
+    margin: 0;
+
+    font-family: Georgia, serif;
+
+    font-size: 44px;
+
+    line-height: 1.1;
+}
+
+.shop-header p {
+    margin-top: 12px;
+
+    color: #76695a;
+
+    font-size: 15px;
+}
+
+
+/* ========================================
+   PRODUCT GRID
+======================================== */
+
+.product-grid {
+    max-width: 1200px;
+
+    margin: 0 auto;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 28px;
+}
+
+
+/* ========================================
+   PRODUCT CARD
+======================================== */
+
+.product-card {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+
+    background: #fff8df;
+
+    border: 3px solid #2b2118;
+
+    border-radius: 4px;
+
+    overflow: hidden;
+
+    box-shadow: 7px 7px 0 #2b2118;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+/* Hover */
+
+.product-card:hover {
+    transform: translate(-3px, -3px);
+
+    box-shadow: 10px 10px 0 #2b2118;
+}
+
+
+/* ========================================
+   IMAGE
+======================================== */
+
+.product-image {
+    width: 100%;
+
+    height: 250px;
+
+    overflow: hidden;
+
+    background: #eadca9;
+
+    border-bottom: 3px solid #2b2118;
+}
+
+.product-image img {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+
+    transition:
+        transform 0.4s ease;
+}
+
+.product-card:hover .product-image img {
+    transform: scale(1.05);
+}
+
+
+/* ========================================
+   PRODUCT CONTENT
+======================================== */
+
+.product-content {
+    padding: 22px;
+
+    display: flex;
+    flex-direction: column;
+
+    flex: 1;
+}
+
+.product-category {
+    margin: 0 0 8px;
+
+    color: #28666e;
+
+    font-family: monospace;
+
+    font-size: 11px;
+    font-weight: bold;
+
+    letter-spacing: 2px;
+}
+
+.product-content h2 {
+    margin: 0;
+
+    font-family: Georgia, serif;
+
+    font-size: 24px;
+
+    line-height: 1.2;
+}
+
+.product-description {
+    margin: 12px 0 20px;
+
+    color: #76695a;
+
+    font-size: 14px;
+
+    line-height: 1.6;
+
+    display: -webkit-box;
+
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+
+    overflow: hidden;
+}
+
+
+/* ========================================
+   PRICE + DETAIL
+======================================== */
+
+.product-bottom {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 15px;
+
+    margin-top: auto;
+
+    padding-top: 15px;
+
+    border-top: 2px dashed #b9a989;
+}
+
+.product-price {
+    margin: 0;
+
+    color: #c65d3b;
+
+    font-family: Georgia, serif;
+
+    font-size: 23px;
+
+    font-weight: bold;
+}
+
+
+/* ========================================
+   DETAIL LINK
+======================================== */
+
+.detail-button {
+    padding: 8px 12px;
+
+    color: #28666e;
+
+    border-bottom: 2px solid #28666e;
+
+    text-decoration: none;
+
+    font-size: 13px;
+
+    font-weight: bold;
+
+    transition:
+        color 0.2s ease,
+        background 0.2s ease;
+}
+
+.detail-button:hover {
+    color: #fff8df;
+
+    background: #28666e;
+}
+
+
+/* ========================================
+   PRODUCT ACTIONS
+======================================== */
+
+.product-actions {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 10px;
+
+    margin-top: 18px;
+}
+
+
+/* ========================================
+   BUTTON AS LINK
+======================================== */
+
+.btn {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-height: 43px;
+
+    padding: 10px 14px;
+
+    border: 2px solid #2b2118;
+
+    border-radius: 3px;
+
+    text-decoration: none;
+
+    font-size: 13px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease,
+        background 0.2s ease;
+}
+
+
+/* ========================================
+   ADD TO CART
+======================================== */
+
+.btn-cart {
+    background: #f4e8c1;
+
+    color: #2b2118;
+
+    box-shadow: 3px 3px 0 #2b2118;
+}
+
+.btn-cart:hover {
+    background: #eadca9;
+
+    transform: translate(2px, 2px);
+
+    box-shadow: 1px 1px 0 #2b2118;
+}
+
+
+/* ========================================
+   BUY NOW
+======================================== */
+
+.btn-buy {
+    background: #c65d3b;
+
+    color: #fff8df;
+
+    box-shadow: 3px 3px 0 #2b2118;
+}
+
+.btn-buy:hover {
+    background: #28666e;
+
+    transform: translate(2px, 2px);
+
+    box-shadow: 1px 1px 0 #2b2118;
+}
+
+.btn:active {
+    transform: translate(3px, 3px);
+
+    box-shadow: none;
+}
+
+
+/* ========================================
+   EMPTY PRODUCTS
+======================================== */
+
+.empty-products {
+    max-width: 700px;
+
+    margin: 100px auto;
+
+    padding: 50px;
+
+    text-align: center;
+
+    background: #fff8df;
+
+    border: 3px solid #2b2118;
+
+    box-shadow: 7px 7px 0 #2b2118;
+}
+
+.empty-products h2 {
+    margin: 0;
+
+    font-family: Georgia, serif;
+
+    font-size: 30px;
+}
+
+.empty-products p {
+    color: #76695a;
+}
+
+
+/* ========================================
+   RESPONSIVE
+======================================== */
+
+@media (max-width: 950px) {
+
+    .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+
+@media (max-width: 650px) {
+
+    .product-page {
+        padding: 35px 18px 60px;
+    }
+
+    .shop-header h1 {
+        font-size: 36px;
+    }
+
+    .product-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .product-image {
+        height: 230px;
+    }
+}

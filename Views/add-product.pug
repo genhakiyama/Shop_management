@@ -1,0 +1,35 @@
+extends layouts/header.pug 
+
+block styles 
+    link(rel = "stylesheet" , href = "/css/add-product.css")
+
+block content 
+    main.admin-container
+        .page-header 
+            h1 Add new Product 
+            p Create a new product for your shop 
+        
+        form.product-form(action = "/product" , method = "POST") 
+            .form-section 
+                h2 Product Information 
+                
+                .form-control 
+                    label(for = "title") Product Name 
+                    input#title(type = "text" , name = "title" , placeholder = "Enter Product Name" , required)
+
+                    label(for = "image") Image 
+                    input#image(type = "url" , name = "image" , placeholder = "Enter image URL" , required)
+
+                    label(for = "price") Price 
+                    input#price(type = "text" , name = "price" , placeholder = "Enter Product Price" , min = "0" , required)
+
+                    label(for = "description") Description 
+                    textarea#description(type = "text" , name = "description" , placeholder = "Describe your Product" , rows = "5", required)
+
+                    
+                .form-actions 
+                    a.canel-button(href = "/") Cancel 
+                    button.submit-button(type = "submit") Add Product 
+
+
+        

@@ -1,0 +1,335 @@
+/* ================================
+   ADMIN - RETRO PRODUCT FORM
+================================ */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+    background: #f4e8c1;
+    color: #2b2118;
+}
+
+
+/* ================================
+   MAIN CONTAINER
+================================ */
+
+.admin-container {
+    min-height: calc(100vh - 76px);
+    padding: 55px 25px 80px;
+
+    background:
+        radial-gradient(
+            circle at 10% 10%,
+            rgba(212, 160, 23, 0.15),
+            transparent 25%
+        ),
+        #f4e8c1;
+}
+
+
+/* ================================
+   PAGE HEADER
+================================ */
+
+.page-header {
+    max-width: 850px;
+    margin: 0 auto 35px;
+}
+
+.page-header h1 {
+    margin: 0;
+
+    font-family: Georgia, serif;
+    font-size: 42px;
+
+    color: #2b2118;
+}
+
+.page-header p {
+    margin-top: 10px;
+
+    color: #76695a;
+    font-size: 15px;
+}
+
+
+/* ================================
+   PRODUCT FORM
+================================ */
+
+.product-form {
+    max-width: 850px;
+    margin: 0 auto;
+}
+
+
+/* ================================
+   FORM SECTION
+================================ */
+
+.form-section {
+    padding: 35px;
+
+    background: #fff8df;
+
+    border: 3px solid #2b2118;
+    border-radius: 4px;
+
+    box-shadow: 8px 8px 0 #2b2118;
+}
+
+.form-section h2 {
+    margin: 0 0 30px;
+
+    padding-bottom: 18px;
+
+    border-bottom: 2px dashed #b9a989;
+
+    font-family: Georgia, serif;
+    font-size: 24px;
+}
+
+
+/* ================================
+   FORM CONTROL
+================================ */
+
+.form-control {
+    margin-bottom: 25px;
+}
+
+.form-control label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    font-size: 14px;
+    font-weight: bold;
+
+    color: #2b2118;
+}
+
+
+/* ================================
+   INPUT
+================================ */
+
+.form-control input,
+.form-control textarea {
+    width: 100%;
+
+    padding: 14px 15px;
+
+    background: #f4e8c1;
+
+    border: 2px solid #2b2118;
+    border-radius: 3px;
+
+    outline: none;
+
+    color: #2b2118;
+
+    font-family: inherit;
+    font-size: 14px;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+/* Hover */
+
+.form-control input:hover,
+.form-control textarea:hover {
+    border-color: #28666e;
+}
+
+
+/* Focus */
+
+.form-control input:focus,
+.form-control textarea:focus {
+    border-color: #28666e;
+
+    box-shadow: 4px 4px 0 #28666e;
+
+    transform: translate(-1px, -1px);
+}
+
+
+/* Placeholder */
+
+.form-control input::placeholder,
+.form-control textarea::placeholder {
+    color: #9a8c76;
+}
+
+
+/* ================================
+   IMAGE URL
+================================ */
+
+.form-control input[type="url"] {
+    background: #f4e8c1;
+}
+
+
+/* ================================
+   PRICE
+================================ */
+
+.form-control input[name="price"] {
+    font-weight: 600;
+}
+
+
+/* ================================
+   TEXTAREA
+================================ */
+
+.form-control textarea {
+    resize: vertical;
+
+    min-height: 150px;
+}
+
+
+/* ================================
+   ACTIONS
+================================ */
+
+.form-actions {
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 15px;
+
+    margin-top: 35px;
+}
+
+
+/* ================================
+   CANCEL
+================================ */
+
+.form-actions .cancel-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 12px 22px;
+
+    background: #fff8df;
+    color: #2b2118;
+
+    border: 2px solid #2b2118;
+    border-radius: 3px;
+
+    box-shadow: 3px 3px 0 #2b2118;
+
+    text-decoration: none;
+
+    font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+.form-actions .cancel-button:hover {
+    background: #eadca9;
+
+    color: #2b2118;
+
+    transform: translate(2px, 2px);
+
+    box-shadow: 1px 1px 0 #2b2118;
+}
+
+.form-actions .cancel-button:active {
+    transform: translate(3px, 3px);
+
+    box-shadow: none;
+}
+
+/* ================================
+   ADD PRODUCT BUTTON
+================================ */
+
+.submit-button {
+    padding: 13px 28px;
+
+    background: #c65d3b;
+
+    color: #fff8df;
+
+    border: 3px solid #2b2118;
+
+    box-shadow: 5px 5px 0 #2b2118;
+
+    cursor: pointer;
+
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: bold;
+
+    transition:
+        background 0.2s ease,
+        transform 0.15s ease,
+        box-shadow 0.15s ease;
+}
+
+.submit-button:hover {
+    background: #28666e;
+
+    transform: translate(2px, 2px);
+
+    box-shadow: 3px 3px 0 #2b2118;
+}
+
+.submit-button:active {
+    transform: translate(5px, 5px);
+
+    box-shadow: none;
+}
+
+
+/* ================================
+   RESPONSIVE
+================================ */
+
+@media (max-width: 600px) {
+
+    .admin-container {
+        padding: 35px 18px 60px;
+    }
+
+    .page-header h1 {
+        font-size: 34px;
+    }
+
+    .form-section {
+        padding: 22px;
+    }
+
+    .form-actions {
+        flex-direction: column-reverse;
+    }
+
+    .cancel-button,
+    .submit-button {
+        width: 100%;
+        text-align: center;
+    }
+}
+

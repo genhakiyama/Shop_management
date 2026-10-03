@@ -1,0 +1,129 @@
+extends layouts/header
+
+block styles
+    link(rel="stylesheet", href="/css/home.css")
+
+block content
+
+    main.home-page
+
+        //- HERO
+        section.hero
+
+            .hero-content
+
+                p.hero-label WELCOME TO OUR SHOP
+
+                h1
+                    | Find Something
+                    br
+                    span You’ll Love.
+
+                p.hero-description
+                    | Discover our collection of carefully selected
+                    | products, made for people who appreciate
+                    | simple things with character.
+
+                .hero-actions
+                    a.hero-button(href="/products")
+                        | Explore Products
+
+                    a.hero-link(href="/about")
+                        | About Us →
+
+            .hero-decoration
+
+                .sun
+                    | ✦
+
+                .hero-card
+                    p FEATURED
+                    h2 Retro
+                    h2 Collection
+                    span EST. 2026
+
+
+        //- FEATURES
+        section.features
+
+            .section-heading
+                p.section-label WHY US
+                h2 Shopping, but with character.
+
+            .feature-grid
+
+                .feature
+                    .feature-number 01
+                    h3 Quality Products
+                    p
+                        | We carefully select products that
+                        | deserve a place in our collection.
+
+                .feature
+                    .feature-number 02
+                    h3 Simple Shopping
+                    p
+                        | Browse, choose and purchase without
+                        | unnecessary complications.
+
+                .feature
+                    .feature-number 03
+                    h3 Made With Care
+                    p
+                        | Every part of our shop is designed
+                        | with attention to detail.
+
+
+        //- PRODUCT PREVIEW
+        section.product-preview
+
+            .preview-header
+                div
+                    p.section-label OUR COLLECTION
+                    h2 Featured Products
+
+                a.view-all(href="/products")
+                    | View All →
+
+            if products && products.length > 0
+
+                .preview-grid
+
+                    each product in products.slice(0, 3)
+
+                        article.preview-product
+
+                            .preview-image
+                                img(
+                                    src=product.image
+                                    alt=product.title
+                                )
+
+                            .preview-info
+
+                                p.product-label PRODUCT
+
+                                h3 #{product.title}
+
+                                p.price
+                                    | $#{product.price}
+
+                                a.product-link(
+                                    href=`/products/${product.id}`
+                                )
+                                    | View Product →
+
+
+        //- CALL TO ACTION
+        section.cta
+
+            .cta-content
+
+                p.section-label READY?
+
+                h2 Find your next
+                    br
+                    | favorite product.
+
+                a.cta-button(href="/products")
+                    | Start Shopping

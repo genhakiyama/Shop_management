@@ -1,0 +1,64 @@
+extends layouts/header.pug 
+
+block styles 
+    link(rel = "stylesheet" , href = "/css/shop.css") 
+
+block content
+
+    main.product-page
+
+        .shop-header
+            .shop-label PRODUCT COLLECTION
+            h1 Our Products
+            p Discover products from our shop
+
+        if prods.length > 0
+
+            .product-grid
+
+                each product in prods
+
+                    article.product-card
+
+                        .product-image
+                            img(
+                                src=product.image
+                                alt=product.title
+                            )
+
+                        .product-content
+
+                            p.product-category PRODUCT
+
+                            h2 #{product.title}
+
+                            p.product-description
+                                | #{product.description}
+
+                            .product-bottom
+
+                                p.product-price
+                                    | $#{product.price}
+
+                                a.detail-button(
+                                    href=`/products/${product.id}`
+                                )
+                                    | View Detail
+
+                            .product-actions
+
+                                a.btn.btn-cart(
+                                    href=`/cart/add/${product.id}`
+                                )
+                                    | Add to Cart
+
+                                a.btn.btn-buy(
+                                    href=`/product/buy/${product.id}`
+                                )
+                                    | Buy Now
+
+        else
+
+            .empty-products
+                h2 No Products
+                p There are currently no products available.

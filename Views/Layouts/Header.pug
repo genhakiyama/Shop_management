@@ -1,0 +1,25 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title #{pageTitle}
+
+        link(rel = "stylesheet" , href = "/css/header.css")
+        
+        block styles 
+
+    body 
+        header.navbar.navbar-container 
+            nav.nav-links 
+                a.nav-link(href = "/home" ,  class = (path === "/home" ? 'active' : '')) Home 
+                a.nav-link(href = "/products" , class = (path === "/products" ? 'active' : '')) Products 
+                a.nav-link(href = "/orders" , class = (path === "/orders" ? 'active' : '')) Orders 
+                a.nav-link(href = "/add-product" , class = (path === "/add-product" ? 'active' : '')) Add your product 
+
+            .nav-actions 
+                a.nav-icon(href = "/cart" title = "Cart") 
+                    span 🛒
+
+        block content 
+                
