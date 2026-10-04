@@ -1,281 +1,165 @@
-/* ========================================
-   RETRO HEADER / NAVBAR
-======================================== */
+/* ==========================================================
+   header.css — 70s mail-order catalog vibe
+   Put this file at: public/css/header.css
+   ========================================================== */
+
+@import url("https://fonts.googleapis.com/css2?family=Righteous&family=DM+Sans:wght@400;500;700&display=swap");
 
 :root {
-    --cream: #F5E8C8;
-    --ivory: #FFF7E3;
-    --brown: #33251D;
-    --mustard: #D4A72C;
-    --orange: #C85A32;
-    --olive: #596B45;
-    --olive-dark: #3F5032;
+  --ink: #2b1b17;        /* warm dark brown, used instead of black */
+  --mustard: #f2b134;    /* header bar */
+  --tomato: #e4572e;     /* active link */
+  --teal: #1f7a74;       /* hover / accents */
+  --sand: #f6e6bf;       /* page background */
+  --paper: #fff6dc;      /* link background */
+
+  --font-display: "Righteous", "Trebuchet MS", sans-serif;
+  --font-body: "DM Sans", "Helvetica Neue", Arial, sans-serif;
+
+  --border: 3px solid var(--ink);
+  --shadow: 4px 4px 0 var(--ink);
 }
-
-
-/* ========================================
-   RESET
-======================================== */
 
 * {
-    box-sizing: border-box;
-}
-
-html {
-    font-size: 16px;
+  box-sizing: border-box;
 }
 
 body {
-    margin: 0;
+  margin: 0;
+  font-family: var(--font-body);
+  color: var(--ink);
+  background-color: var(--sand);
+  /* faint halftone dots */
+  background-image: radial-gradient(rgba(43, 27, 23, 0.12) 1px, transparent 1.4px);
+  background-size: 14px 14px;
 }
 
-
-/* ========================================
-   HEADER
-======================================== */
-
-.main-header {
-    width: 100%;
-
-    min-height: 72px;
-
-    padding: 0 clamp(18px, 5vw, 70px);
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    gap: 30px;
-
-    background: var(--olive);
-
-    border-bottom: 4px solid var(--brown);
-
-    box-shadow: 0 5px 0 var(--mustard);
-
-    position: relative;
-
-    z-index: 100;
-}
-
-
-/* ========================================
-   LOGO
-======================================== */
-
-.logo {
-    color: var(--cream);
-
-    text-decoration: none;
-
-    font-family: Georgia, serif;
-
-    font-size: clamp(24px, 3vw, 36px);
-
-    font-weight: bold;
-
-    letter-spacing: 1px;
-
-    white-space: nowrap;
-
-    transition: color 0.2s ease;
-}
-
-.logo:hover {
-    color: var(--mustard);
-}
-
-
-/* ========================================
-   NAVBAR
-======================================== */
+/* ---------- Header bar ---------- */
 
 .navbar {
-    display: flex;
-
-    align-items: center;
-
-    justify-content: flex-end;
-
-    gap: clamp(12px, 2vw, 30px);
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
-
-/* ========================================
-   NAV LINKS
-======================================== */
-
-.navbar a {
-    position: relative;
-
-    padding: 9px 4px;
-
-    color: var(--ivory);
-
-    text-decoration: none;
-
-    font-family: "Trebuchet MS", Arial, sans-serif;
-
-    font-size: clamp(12px, 1.3vw, 16px);
-
-    font-weight: bold;
-
-    white-space: nowrap;
-
-    transition:
-        color 0.2s ease,
-        transform 0.2s ease;
+.navbar-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.9rem 1.5rem 1.1rem;
+  background: var(--mustard);
+  border-bottom: var(--border);
+  /* the signature: three 70s stripes under the bar */
+  box-shadow:
+    0 6px 0 var(--tomato),
+    0 6px 0 3px var(--ink),
+    0 12px 0 var(--teal),
+    0 12px 0 3px var(--ink);
+  margin-bottom: 16px; /* room for the stripes */
 }
 
+/* ---------- Links ---------- */
 
-/* ========================================
-   HOVER UNDERLINE
-======================================== */
-
-.navbar a::after {
-    content: "";
-
-    position: absolute;
-
-    left: 0;
-
-    bottom: 0;
-
-    width: 0;
-
-    height: 3px;
-
-    background: var(--mustard);
-
-    transition: width 0.25s ease;
+.nav-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
 }
 
-.navbar a:hover {
-    color: var(--mustard);
-
-    transform: translateY(-1px);
+.nav-link {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+  text-decoration: none;
+  background: var(--paper);
+  padding: 0.45rem 1rem;
+  border: var(--border);
+  border-radius: 999px;
+  box-shadow: 3px 3px 0 var(--ink);
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
 }
 
-.navbar a:hover::after {
-    width: 100%;
+.nav-link:hover {
+  background: var(--teal);
+  color: var(--paper);
+  transform: translate(-1px, -1px);
+  box-shadow: 5px 5px 0 var(--ink);
 }
 
-
-/* ========================================
-   ACTIVE LINK
-======================================== */
-
-.navbar a.active {
-    color: var(--mustard);
+.nav-link:active {
+  transform: translate(3px, 3px);
+  box-shadow: 0 0 0 var(--ink);
 }
 
-.navbar a.active::after {
-    width: 100%;
+.nav-link.active {
+  background: var(--tomato);
+  color: var(--paper);
 }
 
+/* ---------- Cart ---------- */
 
-/* ========================================
-   CART LINK
-======================================== */
-
-.navbar .cart-link {
-    display: flex;
-
-    align-items: center;
-
-    gap: 6px;
+.nav-actions {
+  display: flex;
+  align-items: center;
 }
 
-
-/* ========================================
-   TABLET
-======================================== */
-
-@media (max-width: 900px) {
-
-    .main-header {
-        min-height: 65px;
-
-        padding: 12px 25px;
-
-        gap: 20px;
-    }
-
-    .navbar {
-        gap: 15px;
-    }
-
-    .navbar a {
-        font-size: 14px;
-    }
+.nav-icon {
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  font-size: 1.4rem;
+  text-decoration: none;
+  background: var(--paper);
+  border: var(--border);
+  border-radius: 50%;
+  box-shadow: 3px 3px 0 var(--ink);
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
 }
 
-
-/* ========================================
-   MOBILE
-======================================== */
-
-@media (max-width: 600px) {
-
-    .main-header {
-        padding: 15px;
-
-        flex-direction: column;
-
-        align-items: center;
-
-        gap: 15px;
-    }
-
-    .logo {
-        font-size: 28px;
-    }
-
-    .navbar {
-        width: 100%;
-
-        justify-content: center;
-
-        flex-wrap: wrap;
-
-        gap: 8px 16px;
-    }
-
-    .navbar a {
-        font-size: 13px;
-    }
+.nav-icon:hover {
+  background: var(--tomato);
+  transform: translate(-1px, -1px) rotate(-8deg);
+  box-shadow: 5px 5px 0 var(--ink);
 }
 
+.nav-icon:active {
+  transform: translate(3px, 3px);
+  box-shadow: 0 0 0 var(--ink);
+}
 
-/* ========================================
-   SMALL PHONE
-======================================== */
+/* ---------- Keyboard focus ---------- */
 
-@media (max-width: 400px) {
+.nav-link:focus-visible,
+.nav-icon:focus-visible {
+  outline: 3px dashed var(--ink);
+  outline-offset: 3px;
+}
 
-    .main-header {
-        padding: 12px;
-    }
+/* ---------- Small screens ---------- */
 
-    .logo {
-        font-size: 24px;
-    }
+@media (max-width: 640px) {
+  .navbar-container {
+    flex-wrap: wrap;
+    padding: 0.75rem 1rem 1rem;
+  }
 
-    .navbar {
-        gap: 6px 12px;
-    }
+  .nav-link {
+    font-size: 0.95rem;
+    padding: 0.4rem 0.8rem;
+  }
 
-    .navbar a {
-        font-size: 11px;
-    }
+  .nav-icon {
+    width: 2.6rem;
+    height: 2.6rem;
+  }
+}
 
-    .cart-quantity {
-        min-width: 18px;
-
-        height: 18px;
-
-        font-size: 9px;
-    }
+@media (prefers-reduced-motion: reduce) {
+  .nav-link,
+  .nav-icon {
+    transition: none;
+  }
 }

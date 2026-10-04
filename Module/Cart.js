@@ -25,10 +25,10 @@ module.exports = class Cart {
     static addCargo(id , val)  {
         val = parseFloat(val);
         getCartFile(existingCargo => {
-            const index = existingCargo.findIndex(p => p.product.id == id);
+            const index = existingCargo.findIndex(p => p.id == id);
             if (index != -1) {
                 existingCargo[index].quantity += val;
-                if (existingCargo[index].quantity == 0) existingCargo = existingCargo.filter(p => p.product.id != id);
+                if (existingCargo[index].quantity == 0) existingCargo = existingCargo.filter(p => p.id != id);
                 this.saveCart(existingCargo);
             }
             else if (val != -1) {

@@ -22,7 +22,7 @@ block content
           each product in prods
             article.cart-item
               .cart-image
-                img(src=product.image, alt=product.title)
+                img(src=product.product.image, alt=product.title)
               .cart-info
                 p.product-id PRODUCT ##{product.product.id}
                 h3 #{product.product.title}
