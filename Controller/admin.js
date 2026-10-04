@@ -27,3 +27,13 @@ exports.EditProduct = (req , res , next) => {
         res.render('edit-product' , {product : prod , pageTittle : 'Edit product' , path : '/edit-product' , editing : editMode});
     });
 };
+
+exports.RemoveProduct = (req , res , next) => {
+    Product.fetchAll(products => {
+        
+        products = products.filter(p => p.id !== req.params.productID);
+        console.log(products);
+        Product.savefile(products);
+        res.redirect('/products');
+    });
+};

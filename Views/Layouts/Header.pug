@@ -16,9 +16,7 @@ html(lang="en")
                 a.nav-link(href = "/products" , class = (path === "/products" ? 'active' : '')) Products 
                 a.nav-link(href = "/orders" , class = (path === "/orders" ? 'active' : '')) Orders 
                 a.nav-link(href = "/add-product" , class = (path === "/add-product" ? 'active' : '')) Add your product 
-
-                a.nav-link(href = "/edit-product" , class = "") Edit Product 
-                a.nav-link(href = "/profile" , class = "") Profile
+                a.nav-link(href = "/profile" , class = ((path === "/profile" ? 'active' : ''))) Profile
 
             .nav-actions 
                 a.nav-icon(href = "/cart" title = "Cart") 

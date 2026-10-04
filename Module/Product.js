@@ -16,8 +16,14 @@ module.exports = class Product {
         this.id = id;
         this.title = title , 
         this.image = image , 
-        this.price = parseFloat(price) , 
+        this.price = price , 
         this.description = description;
+
+        let temp = 0;
+        for(const c of String(this.price)) {
+            if ('0' <= c && c <= '9') temp = temp * 10 + Number(c); 
+        }
+        this.price = temp;
     }
 
     save() {

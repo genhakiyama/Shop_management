@@ -51,5 +51,5 @@ block content
           .edit-actions
             button.btn.btn-save(type="submit") Save changes
             a.btn.btn-cancel(href="/products") Cancel
-            button.btn.btn-delete(type="submit", formaction="/delete-product", onclick="return confirm('Delete this product?')") Delete product
+            button.btn.btn-delete(type="submit", formaction=`/product/delete-product/${product.id}`, onclick="return confirm('Delete this product?')") Delete product
 
