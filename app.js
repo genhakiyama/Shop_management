@@ -4,8 +4,9 @@ const rootDir = require('./Helpers/path.js');
 const path = require('path');
 
 const app = express();
-const adminRoutes = require('./Routes/admin');
-const shopRoutes = require('./Routes/shop');
+const adminRoute = require('./Routes/admin');
+const shopRoute = require('./Routes/shop');
+const cartRoute = require('./Routes/Cart');
 
 app.set('view engine' , 'pug');
 app.set('views' , 'Views');
@@ -17,7 +18,8 @@ app.get('/home' , (req , res , next) => {
     res.render('home' , {pageTitle : 'Home' , path : '/home'});
 });
 
-app.use(adminRoutes);
-app.use(shopRoutes);
+app.use(adminRoute);
+app.use(shopRoute);
+app.use(cartRoute);
 
 app.listen(3000);

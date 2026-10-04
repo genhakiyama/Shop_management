@@ -1,0 +1,59 @@
+extends layouts/header
+
+block styles
+  link(rel="stylesheet", href="/css/my-cart.css")
+
+block content
+  main.cart-page
+    section.cart-header
+      div
+        p.cart-label YOUR SHOPPING BAG
+        h1 Shopping Cart
+        p Review your selected products before checkout.
+      a.continue-shopping(href="/products") ← Continue Shopping
+
+    if prods.length > 0
+      .cart-layout
+        section.cart-items
+          .cart-items-header
+            h2 Your Items
+            span #{prods.length} Items
+
+          each product in prods
+            article.cart-item
+              .cart-image
+                img(src=product.image, alt=product.title)
+              .cart-info
+                p.product-id PRODUCT ##{product.product.id}
+                h3 #{product.product.title}
+                p.description #{product.product.description}
+                p.item-price #{product.product.price}
+              .cart-quantity
+                span QUANTITY
+                strong #{product.quantity}
+              .cart-actions
+                a.remove-btn(href=`/cart/remove/${product.id}`) Remove
+
+        aside.cart-summary
+          p.summary-label ORDER SUMMARY
+          h2 Summary
+          .summary-line
+            span Items
+            strong #{prods.length}
+          .summary-line
+            span Subtotal
+            strong $#{total}
+          .summary-divider
+          .summary-total
+            span Total
+            strong $#{total}
+          a.checkout-btn(href="/checkout") Proceed to Checkout
+          a.keep-shopping(href="/products") Continue Shopping →
+
+    else
+      section.empty-cart
+        .empty-icon 🛒
+        p.cart-label YOUR SHOPPING BAG
+        h2 Your Cart is Empty
+        p Looks like you haven't added anything to your cart yet.
+        a.shop-now-btn(href="/products") Start Shopping

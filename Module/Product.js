@@ -15,7 +15,7 @@ module.exports = class Product {
     constructor({title , image , price , description}) {
         this.title = title , 
         this.image = image , 
-        this.price = price , 
+        this.price = parseFloat(price) , 
         this.description = description;
     }
 
