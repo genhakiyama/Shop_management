@@ -32,7 +32,9 @@ block content
                 span QUANTITY
                 strong #{product.quantity}
               .cart-actions
-                a.remove-btn(href=`/cart/remove/${product.id}`) Remove
+                a.remove-btn(href=`/cart/remove/${product.product.id}`) -
+              .cart-actions 
+                a.remove-btn(href=`/cart/add/${product.product.id}`) +
 
         aside.cart-summary
           p.summary-label ORDER SUMMARY

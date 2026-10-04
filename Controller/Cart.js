@@ -18,3 +18,10 @@ exports.AddToCart = (req , res , next) => {
     Cart.addCargo(ID , 1);
     res.redirect('/cart');
 };
+
+exports.RemoveCart = (req , res , next) => {
+    const ID = req.params.cartID;
+    Cart.addCargo(ID , Number(-1));
+    console.log(ID);
+    res.redirect('/cart');
+};

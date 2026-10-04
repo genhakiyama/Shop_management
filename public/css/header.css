@@ -1,159 +1,149 @@
-/* ==========================================================
-   header.css — 70s mail-order catalog vibe
-   Put this file at: public/css/header.css
-   ========================================================== */
+/* header.css — 70s retro navbar
+   Palette: teal, mustard, burnt orange, espresso brown, bone */
 
-@import url("https://fonts.googleapis.com/css2?family=Righteous&family=DM+Sans:wght@400;500;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Righteous&display=swap");
 
 :root {
-  --ink: #2b1b17;        /* warm dark brown, used instead of black */
-  --mustard: #f2b134;    /* header bar */
-  --tomato: #e4572e;     /* active link */
-  --teal: #1f7a74;       /* hover / accents */
-  --sand: #f6e6bf;       /* page background */
-  --paper: #fff6dc;      /* link background */
-
-  --font-display: "Righteous", "Trebuchet MS", sans-serif;
-  --font-body: "DM Sans", "Helvetica Neue", Arial, sans-serif;
-
-  --border: 3px solid var(--ink);
-  --shadow: 4px 4px 0 var(--ink);
-}
-
-* {
-  box-sizing: border-box;
+  --retro-teal: #2a8c82;
+  --retro-mustard: #f0b429;
+  --retro-orange: #d9531e;
+  --retro-brown: #3a2218;
+  --retro-bone: #fff6e0;
 }
 
 body {
   margin: 0;
-  font-family: var(--font-body);
-  color: var(--ink);
-  background-color: var(--sand);
-  /* faint halftone dots */
-  background-image: radial-gradient(rgba(43, 27, 23, 0.12) 1px, transparent 1.4px);
-  background-size: 14px 14px;
+  background: var(--retro-bone);
+  color: var(--retro-brown);
+  font-family: "Trebuchet MS", "Verdana", sans-serif;
 }
 
 /* ---------- Header bar ---------- */
-
 .navbar {
   position: sticky;
   top: 0;
   z-index: 100;
+  background: var(--retro-teal);
+  border-bottom: 4px solid var(--retro-brown);
+  /* subtle dotted texture, like old printed posters */
+  background-image: radial-gradient(rgba(255, 246, 224, 0.12) 1.5px, transparent 1.5px);
+  background-size: 10px 10px;
+}
+
+/* three-stripe band hanging under the bar */
+.navbar::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -14px;
+  height: 10px;
+  background: linear-gradient(
+    to bottom,
+    var(--retro-mustard) 0 33.33%,
+    var(--retro-orange) 33.33% 66.66%,
+    var(--retro-brown) 66.66% 100%
+  );
+  pointer-events: none;
 }
 
 .navbar-container {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
-  padding: 0.9rem 1.5rem 1.1rem;
-  background: var(--mustard);
-  border-bottom: var(--border);
-  /* the signature: three 70s stripes under the bar */
-  box-shadow:
-    0 6px 0 var(--tomato),
-    0 6px 0 3px var(--ink),
-    0 12px 0 var(--teal),
-    0 12px 0 3px var(--ink);
-  margin-bottom: 16px; /* room for the stripes */
+  gap: 16px;
+  padding: 14px 28px;
 }
 
 /* ---------- Links ---------- */
-
 .nav-links {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.6rem;
+  align-items: center;
+  gap: 10px;
 }
 
 .nav-link {
-  font-family: var(--font-display);
+  font-family: "Righteous", "Trebuchet MS", sans-serif;
   font-size: 1.05rem;
   letter-spacing: 0.04em;
-  color: var(--ink);
+  color: var(--retro-bone);
   text-decoration: none;
-  background: var(--paper);
-  padding: 0.45rem 1rem;
-  border: var(--border);
+  padding: 8px 18px;
+  border: 2px solid transparent;
   border-radius: 999px;
-  box-shadow: 3px 3px 0 var(--ink);
-  transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+  transition: transform 0.12s ease, box-shadow 0.12s ease,
+    background-color 0.12s ease;
 }
 
 .nav-link:hover {
-  background: var(--teal);
-  color: var(--paper);
-  transform: translate(-1px, -1px);
-  box-shadow: 5px 5px 0 var(--ink);
+  border-color: var(--retro-bone);
+  background: rgba(58, 34, 24, 0.25);
+}
+
+/* current page: chunky sticker with a hard offset shadow */
+.nav-link.active {
+  background: var(--retro-mustard);
+  color: var(--retro-brown);
+  border-color: var(--retro-brown);
+  box-shadow: 3px 3px 0 var(--retro-brown);
+  transform: rotate(-2deg);
 }
 
 .nav-link:active {
-  transform: translate(3px, 3px);
-  box-shadow: 0 0 0 var(--ink);
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--retro-brown);
 }
 
-.nav-link.active {
-  background: var(--tomato);
-  color: var(--paper);
-}
-
-/* ---------- Cart ---------- */
-
+/* ---------- Right side actions ---------- */
 .nav-actions {
   display: flex;
   align-items: center;
+  gap: 12px;
 }
 
 .nav-icon {
-  display: grid;
-  place-items: center;
-  width: 3rem;
-  height: 3rem;
-  font-size: 1.4rem;
-  text-decoration: none;
-  background: var(--paper);
-  border: var(--border);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  background: var(--retro-orange);
+  border: 3px solid var(--retro-brown);
   border-radius: 50%;
-  box-shadow: 3px 3px 0 var(--ink);
-  transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+  box-shadow: 4px 4px 0 var(--retro-brown);
+  text-decoration: none;
+  font-size: 1.3rem;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
 }
 
 .nav-icon:hover {
-  background: var(--tomato);
-  transform: translate(-1px, -1px) rotate(-8deg);
-  box-shadow: 5px 5px 0 var(--ink);
+  transform: translate(-1px, -1px);
+  box-shadow: 5px 5px 0 var(--retro-brown);
 }
 
 .nav-icon:active {
   transform: translate(3px, 3px);
-  box-shadow: 0 0 0 var(--ink);
+  box-shadow: 1px 1px 0 var(--retro-brown);
 }
 
 /* ---------- Keyboard focus ---------- */
-
 .nav-link:focus-visible,
 .nav-icon:focus-visible {
-  outline: 3px dashed var(--ink);
+  outline: 3px dashed var(--retro-bone);
   outline-offset: 3px;
 }
 
 /* ---------- Small screens ---------- */
-
-@media (max-width: 640px) {
+@media (max-width: 720px) {
   .navbar-container {
-    flex-wrap: wrap;
-    padding: 0.75rem 1rem 1rem;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 12px 16px;
   }
 
-  .nav-link {
-    font-size: 0.95rem;
-    padding: 0.4rem 0.8rem;
-  }
-
-  .nav-icon {
-    width: 2.6rem;
-    height: 2.6rem;
+  .nav-actions {
+    align-self: flex-end;
   }
 }
 

@@ -1,65 +1,36 @@
 extends layouts/header
 
 block styles
-    link(rel="stylesheet", href="/css/ProductDetails.css")
+  link(rel="stylesheet", href="/css/ProductDetails.css")
 
 block content
+  main.product-detail-page
+    a.back-link(href="/products") ← Back to Products
 
-    main.product-detail-page
+    if product
+      section.product-detail-card
+        .product-detail-image
+          img(src=product.image, alt=product.title)
 
-        .back-navigation
-            a(href="/products") ← Back to Products
+        .product-detail-info
+          p.product-label PRODUCT DETAILS
+          h1= product.title
+          .product-divider
+          .product-price $#{product.price}
 
-        if product
+          .product-description
+            h2 Description
+            p= product.description
 
-            .product-detail-card
+          .product-meta
+            span.product-status ● In Stock
+            span.product-id Product ID: ##{product.id}
 
-                .product-detail-image
-                    img(
-                        src=product.image
-                        alt=product.title
-                    )
-
-                .product-detail-info
-
-                    p.product-label PRODUCT DETAILS
-
-                    h1 #{product.title}
-
-                    .product-divider
-
-                    .product-price
-                        | $#{product.price}
-
-                    .product-description
-                        h2 Description
-
-                        p #{product.description}
-
-                    .product-meta
-                        span.product-status ● In Stock
-                        span.product-id Product ID: ##{product.id}
-
-                    .product-actions
-
-                        a.btn.btn-cart(
-                            href=`/cart/add/${product.id}`
-                        )
-                            | Add to Cart
-
-                        a.btn.btn-buy(
-                            href=`/product/buy/${product.id}`
-                        )
-                            | Buy Now
-
-        else
-
-            .product-not-found
-
-                h1 Product Not Found
-
-                p
-                    | Sorry, we couldn't find the product you're looking for.
-
-                a.btn.btn-back(href="/products")
-                    | Back to Products
+          .product-actions
+            a.btn.btn-cart(href=`/cart/add/${product.id}`) Add to Cart
+            a.btn.btn-buy(href=`/product/edit-product/${product.id}?edit=true`) Edit details
+    else
+      .product-not-found
+        h1 Product Not Found
+        p Sorry, we couldn't find the product you're looking for.
+        a.btn.btn-back(href="/products") Back to Products

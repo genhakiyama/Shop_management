@@ -1,0 +1,55 @@
+extends layouts/header
+
+block styles 
+  link(rel="stylesheet", href="/css/edit-product.css")
+
+block content
+  - const placeholderImg = 'https://via.placeholder.com/600x600?text=Product+image'
+
+  main.edit-page
+    .edit-window
+
+      .edit-titlebar
+        span.edit-titlebar-text Edit product
+        span.edit-titlebar-dots(aria-hidden="true")
+          i
+          i
+          i
+
+      form.edit-form(action="/product", method="POST")
+        input(type="hidden", name="id", value=product.id)
+
+        //- Left: image
+        section.edit-media
+          .image-frame
+            img#imagePreview(src=product.image || placeholderImg, alt=product.title)
+
+          label.field
+            span.field-label Image URL
+            input#imageUrl(type="url", name="image", value=product.image , placeholder="https://...")
+            span.field-hint Paste a link and the preview updates.
+
+        //- Right: details
+        section.edit-fields
+          label.field
+            span.field-label Product name
+            input(type="text", name="title", value=product.title, required, maxlength="80")
+
+          .field-row
+            label.field
+              span.field-label Price ($)
+              input(type="number", name="price", value=product.price, min="0", step="0.01", required)
+
+            label.field
+              span.field-label In stock
+              input(type="number", name="stock", value=product.stock, min="0", max="1", required)
+
+          label.field
+            span.field-label Description
+            textarea(name="description", rows="5", maxlength="500")= product.description
+
+          .edit-actions
+            button.btn.btn-save(type="submit") Save changes
+            a.btn.btn-cancel(href="/products") Cancel
+            button.btn.btn-delete(type="submit", formaction="/delete-product", onclick="return confirm('Delete this product?')") Delete product
+

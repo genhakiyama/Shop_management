@@ -8,6 +8,7 @@ exports.showProduct = (req , res , next) => {
 
 exports.ProductDetails = (req , res , next) => {
     const ID = req.params.productID;
+
     Product.FindbyID(ID , prod => {
         res.render('ProductDetails' , {product : prod , pageTittle : 'Product Details' , path : '/ProductDetails'});
     });
