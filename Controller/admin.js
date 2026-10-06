@@ -1,3 +1,4 @@
+const { Op } = require('sequelize');
 const Product = require('../Module/Product');
 
 exports.getAddProduct = (req , res , next) => {
@@ -5,35 +6,57 @@ exports.getAddProduct = (req , res , next) => {
 };
 
 exports.postProduct = (req , res , next) => {
-    if (req.body.id == "") req.body.id = null;  
-
-    const product = new Product({
-        id : req.body.id ,
-        title : req.body.title , 
-        image : req.body.image , 
-        price : req.body.price ,  
-        description : req.body.description
-    });
-
-    product.save();
-    res.redirect('/products');
+    const title = req.body.title ;
+    const image = req.body.image ;
+    const price = req.body.price ;
+    const description = req.body.description;
+    const id = req.body.id;
+        Product.findByPk(id)
+            .then(product => {
+                if (!product) {
+                    return Product.create({
+                       title : title , 
+                       price : price , 
+                       image : image , 
+                       description : description 
+                    });
+                }
+                product.title = title ,
+                product.price = price,
+                product.image = image,
+                product.description = description,
+                product.save();
+            })
+            .then(result => {
+                res.redirect('/products');
+            })
+            .catch(err => {
+                console.log(err);
+            });
 };
 
 exports.EditProduct = (req , res , next) => {
     const editMode = req.query.edit;
-    const ID = req.params.productID;
-    console.log(ID);
-    Product.FindbyID(ID , prod => {
-        res.render('edit-product' , {product : prod , pageTittle : 'Edit product' , path : '/edit-product' , editing : editMode});
-    });
+    const id = req.params.productID;
+    Product.findByPk(id)
+        .then(prod => {
+             res.render('edit-product' , {product : prod , pageTittle : 'Edit product' , path : '/edit-product' , editing : editMode});
+        })
+        .catch(err => {
+            console.log(err);
+        });
 };
 
 exports.RemoveProduct = (req , res , next) => {
-    Product.fetchAll(products => {
-        
-        products = products.filter(p => p.id !== req.params.productID);
-        console.log(products);
-        Product.savefile(products);
-        res.redirect('/products');
-    });
+    const id = req.params.productID;
+    Product.findByPk(id)
+        .then(product => {
+            return product.destroy();
+        })
+        .then(result => {
+            res.redirect('/products');
+        })
+        .catch(err => {
+            console.log(err);
+        });
 };
