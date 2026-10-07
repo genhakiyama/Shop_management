@@ -22,19 +22,19 @@ block content
           each product in prods
             article.cart-item
               .cart-image
-                img(src=product.product.image, alt=product.title)
+                img(src=product.image, alt=product.title)
               .cart-info
-                p.product-id PRODUCT ##{product.product.id}
-                h3 #{product.product.title}
-                p.description #{product.product.description}
-                p.item-price #{product.product.price}
+                p.product-id PRODUCT ##{product.id}
+                h3 #{product.title}
+                p.description #{product.description}
+                p.item-price #{product.price}
               .cart-quantity
                 span QUANTITY
-                strong #{product.quantity}
+                strong #{product.cartItems.quantity}
               .cart-actions
-                a.remove-btn(href=`/cart/remove/${product.product.id}`) -
+                a.remove-btn(href=`/cart/remove/${product.id}`) -
               .cart-actions 
-                a.remove-btn(href=`/cart/add/${product.product.id}`) +
+                a.remove-btn(href=`/cart/add/${product.id}`) +
 
         aside.cart-summary
           p.summary-label ORDER SUMMARY
