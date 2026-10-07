@@ -22,8 +22,7 @@ exports.cargoList = (req , res , next) => {
         .then(cart => {
             fetchedCart = cart;
             return cart.getProducts()
-                            .then(products => {          
-                                // console.log(products);                      
+                            .then(products => {                          
                                 res.render('my-cart' , {prods : products , total : fetchedCart.total , pageTitle : 'My cart' , path : '/my-cart'});
                             })
         })
