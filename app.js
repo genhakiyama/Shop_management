@@ -12,9 +12,16 @@ const path = require('path');
     const sequelize = require('./Helpers/database');
     const Product = require('./Module/Product.js');
     const User = require('./Module/user.js');
+    const Cart = require('./Module/Cart.js');
+    const CartItem = require('./Module/Cart-item.js');
 
 /* CONNECTING DATA BASE */
     Product.belongsTo(User , {constraints : true , onDelete : 'CASCADE'});
+    User.hasMany(Product);
+    User.hasOne(Cart);
+    Cart.belongsTo(User) ;
+    Cart.belongsToMany(Product , {through : CartItem});
+    Product.belongsToMany(Cart , {through : CartItem});
 
 /* SETTING VIEW ENGINE  */
     app.set('view engine' , 'pug');
@@ -43,7 +50,7 @@ app.use(adminRoute) ;
 app.use(shopRoute);
 app.use(cartRoute);
 
-sequelize.sync({force : true})
+sequelize.sync({force : false})
     .then(result => {
         return User.findByPk(1);
     })
@@ -57,6 +64,13 @@ sequelize.sync({force : true})
         return user ;
     })
     .then(user => {
+        return user.getCart()
+                        .then(cart => {
+                            if (!cart) return user.createCart();
+                            return cart;
+                        });
+    })
+    .then(cart => {
         app.listen(3000);
     })
     .catch(err => {

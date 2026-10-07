@@ -1,7 +1,8 @@
 const Product = require('../Module/Product');
 
 exports.showProduct = (req , res , next) => {
-    Product.findAll()
+    req.user
+    .getProducts()
         .then(products => {
             res.render('Products' , {prods : products , pageTitle : 'Products' , path : '/products'});
         })
@@ -13,7 +14,16 @@ exports.showProduct = (req , res , next) => {
 exports.ProductDetails = (req , res , next) => {
     const id = req.params.productID;
 
-    Product.findByPk(id)
+   req.user
+        .getProducts({
+            where : {
+                id : id 
+            }
+        })
+        .then(products => {
+            if (!products) return res.redirect('/home');
+            return products[0];
+        })
         .then(product => {
             res.render('ProductDetails' , {product : product , pageTittle : product.title , path : '/ProductDetails'});
         })

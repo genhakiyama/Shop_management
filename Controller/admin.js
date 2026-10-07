@@ -14,7 +14,7 @@ exports.postProduct = (req , res , next) => {
         Product.findByPk(id)
             .then(product => {
                 if (!product) {
-                    return Product.create({
+                    return req.user.createProduct({
                        title : title , 
                        price : price , 
                        image : image , 
@@ -38,7 +38,16 @@ exports.postProduct = (req , res , next) => {
 exports.EditProduct = (req , res , next) => {
     const editMode = req.query.edit;
     const id = req.params.productID;
-    Product.findByPk(id)
+    req.user
+        .getProducts({
+            where : {
+                id : id 
+            }
+        }).
+        then(products => {
+            if (!products) return res.redirect('/home');
+            return products[0];
+        })
         .then(prod => {
              res.render('edit-product' , {product : prod , pageTittle : 'Edit product' , path : '/edit-product' , editing : editMode});
         })
