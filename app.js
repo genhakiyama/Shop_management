@@ -8,6 +8,7 @@ const path = require('path');
     const adminRoute = require('./Routes/admin');
     const shopRoute = require('./Routes/shop');
     const cartRoute = require('./Routes/Cart');
+    const UserRoute = require('./Routes/Users.js');
 /* DATABASE */
     const sequelize = require('./Helpers/database');
     const Product = require('./Module/Product.js');
@@ -49,6 +50,7 @@ const path = require('path');
 app.use(adminRoute) ;
 app.use(shopRoute);
 app.use(cartRoute);
+app.use(UserRoute);
 
 sequelize.sync({force : false})
     .then(result => {

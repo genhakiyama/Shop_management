@@ -1,5 +1,4 @@
 const Cart = require('../Module/Cart');
-const CartItem = require('../Module/Cart-item');
 const Product = require('../Module/Product');
 
 const updateCartTotal = cart => {
