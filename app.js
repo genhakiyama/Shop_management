@@ -3,8 +3,14 @@ const bodyParser = require('body-parser');
 const rootDir = require('./Helpers/path.js');
 const path = require('path');
 
+
 /* ROUTES */
     const app = express();
+
+    /* PARSING JSON  */
+        app.use(bodyParser.urlencoded({extended : true}));
+        app.use(express.static(path.join(rootDir , 'public')));
+
     const adminRoute = require('./Routes/admin');
     const shopRoute = require('./Routes/shop');
     const cartRoute = require('./Routes/Cart');
@@ -29,8 +35,7 @@ const path = require('path');
     app.set('views' , 'Views');
 
 /* SETTING ROUTES */
-    app.use(bodyParser.urlencoded({extended : true}));
-    app.use(express.static(path.join(rootDir , 'public')));
+
 
     app.use((req , res , next) => {
         User.findByPk(1)
