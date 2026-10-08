@@ -1,0 +1,56 @@
+extends layouts/header.pug
+
+block styles
+  link(rel="preconnect", href="https://fonts.googleapis.com")
+  link(rel="stylesheet", href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap")
+  link(rel="stylesheet", href="/css/login.css")
+
+block content
+  main.login-page
+    section.login-window
+      .window-bar
+        span.window-title LOGIN.EXE
+        .window-buttons
+          span _
+          span □
+          span ×
+
+      .window-body
+        //- ===== Left: welcome panel (fills the space, edit freely) =====
+        aside.login-side
+          p.eyebrow Welcome back
+          h1.login-heading
+            | Good to
+            br
+            | see you
+            span.accent  again.
+          p.login-text Sign in to check your orders, manage your cart and keep track of what you've bought.
+          //- EXTEND: add a quote, an illustration, shop highlights...
+
+        //- ===== Right: form =====
+        .login-main
+          .section-title ► SIGN IN
+
+          if error
+            p.form-error= error
+
+          form.login-form(action="/profile/login", method="POST")
+            .field
+              label(for="email") Email
+              input#email(type="email", name="email", placeholder="you@example.com", value=email || "", required)
+            .field
+              label(for="password") Password
+              input#password(type="password", name="password", placeholder="••••••••", required)
+
+            //- EXTEND: remember me, forgot password, etc.
+            .login-row
+              label.check
+                input(type="checkbox", name="remember")
+                span Remember me
+              a.link(href="/forgot-password") Forgot password?
+
+            button.btn(type="submit") LOG IN
+
+          p.login-switch
+            | New here?
+            a.link(href="/signup")  Create an account →

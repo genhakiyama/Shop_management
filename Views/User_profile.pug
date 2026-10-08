@@ -1,0 +1,51 @@
+extends layouts/header.pug
+
+block styles
+  link(rel="preconnect", href="https://fonts.googleapis.com")
+  link(rel="stylesheet", href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap")
+  link(rel="stylesheet", href="/css/profile.css")
+
+block content
+  main.profile-page
+    section.profile-window
+      .window-bar
+        span.window-title USER_PROFILE.EXE
+        .window-buttons
+          span _
+          span □
+          span ×
+
+      .window-body
+        //- ===== Left column: identity =====
+        aside.profile-side
+          .avatar-frame
+            if user.imageProfile
+              img.avatar(src=user.imageProfile, alt=user.username)
+            else
+              .avatar.avatar-empty ?
+          h1.profile-name= user.username
+          p.profile-email= user.email
+          span.profile-badge ID #{user.id}
+
+          .profile-actions
+            a.btn(href="/edit-profile") EDIT PROFILE
+            a.btn.btn-alt(href="/orders") MY ORDERS
+
+        //- ===== Right column: stats + extra =====
+        .profile-main
+          .section-title ► STATS
+          .stats-grid
+            .stat-card
+              span.stat-label TOTAL SPENT
+              span.stat-value $#{totalSpent || 0}
+            .stat-card
+              span.stat-label PRODUCTS BOUGHT
+              span.stat-value= productsBought || 0
+            //- EXTEND: copy a .stat-card (Orders, Member since, ...)
+
+          .section-title ► MORE
+          .extra-slot
+            //- EXTEND: add more .panel blocks here
+            .panel
+              h3.panel-title RECENT ORDERS
+              p.panel-empty > nothing here yet_
