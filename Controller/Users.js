@@ -34,7 +34,7 @@ exports.postProfile = (req , res , next) => {
                 });
     })
     .then(cart => {
-        req.session.isVerified = true ;
+        req.session.isLoggedIn = true ;
         req.session.userID = fetchUser.id;
         res.redirect(`/profile/viewprofile/${fetchUser.id}`);
     });
@@ -93,6 +93,7 @@ exports.updateProfile = (req , res , next) =>{
             user.imageProfile = req.body.imageProfile;
             user.username = req.body.username;
             user.save();
+            res.redirect(`/profile/viewprofile/${user.id}`)
         })
         .catch(err => {
             console.log(err);
