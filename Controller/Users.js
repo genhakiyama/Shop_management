@@ -1,4 +1,5 @@
 const User = require('../Module/user');
+const bcrypt = require('bcrypt');
 
 exports.logout = (req , res , next) => {
     req.session.destroy(err => {
@@ -19,11 +20,15 @@ exports.createProfile = (req , res , next) => {
 
 exports.postProfile = (req , res , next) => {
     let fetchUser;
-    User.create({
-        username: req.body.username , 
-        email : req.body.email , 
-        password : req.body.password , 
-        imageProfile : req.body.imageProfile
+    
+    bcrypt.hash(req.body.password , 12)
+    .then(hashedPassword =>{
+        return User.create({
+            username: req.body.username , 
+            email : req.body.email , 
+            password :  hashedPassword , 
+            imageProfile : req.body.imageProfile
+        });
     })
     .then(user => {
         fetchUser = user;
@@ -63,19 +68,22 @@ exports.editProfile = (req , res , next) => {
 };
     
 exports.verifyAccount = (req , res , next) => {
-    User
-        .findOne({
+    User.findOne({
             where : {
                 email : req.body.email  
             }
         })
         .then(user => {
-            if (!user) return res.redirect('/home');
-
-            req.session.isLoggedIn = true;
-            req.session.userID = user.id;
-
-            return res.redirect(`/profile/viewprofile/${user.id}`);
+            if (!user) return res.redirect('/profile');
+            console.log(req.body.password);
+            return bcrypt.compare(req.body.password , user.password)
+                            .then(isMatch => {
+                                if (!isMatch) return res.redirect('/profile');
+                                
+                                req.session.isLoggedIn = true;
+                                req.session.userID = user.id;
+                                return res.redirect(`/profile/viewprofile/${user.id}`);
+                            });
         })
         .catch(err => {
             console.log(err);
