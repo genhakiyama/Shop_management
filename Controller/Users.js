@@ -1,13 +1,7 @@
 const User = require('../Module/user');
 
 exports.log = (req , res , next) => {
-    const cookie = req.get('Cookie');
-    let loggedin = 'false';
-    if (cookie){
-        loggedin = cookie.split(';')[0].split('=')[1];
-    }
-    console.log(loggedin);
-    if (loggedin === 'true') return res.redirect('/profile/viewprofile');
+    if (req.session.isLoggedIn) return res.redirect('/profile/viewprofile');
     else {
         res.render('Login' , {pageTtle : 'LOG IN' , path : '/Login'});
     }
@@ -20,8 +14,8 @@ exports.ViewProfile = (req , res , next) => {
             return users[0];
         })
         .then(user  => {
-            res.setHeader('Set-Cookie' , 'loggedin=true'); //- why cannot put viewprofile here
-            res.render('User_profile' , {user : user , pageTitle : 'USER PROFILE' , path : '/User_profile'});
+            req.session.isLoggedIn = true;
+            res.render('User_profile' , {user : user , pageTitle : 'USER PROFILE' , path : '/User_profile' , isVerified : req.session.isLoggedIn});
         })
         .catch(err => {
             console.log(err);
@@ -30,18 +24,17 @@ exports.ViewProfile = (req , res , next) => {
 
     
 exports.verityAccount = (req , res , next) => {
-        User
-            .findOne({
-                where : {
-                    email : req.body.email  
-                }
-            })
-            .then(user => {
-                if (!user) return res.redirect('/home');
-                // res.setHeader('Set-Cookie' , 'loggedin=true');
-                return res.redirect('/profile/viewprofile')
-            })
-            .catch(err => {
-                console.log(err);
-            });
+    User
+        .findOne({
+            where : {
+                email : req.body.email  
+            }
+        })
+        .then(user => {
+            if (!user) return res.redirect('/home');
+            return res.redirect('/profile/viewprofile');
+        })
+        .catch(err => {
+            console.log(err);
+        });
 };
