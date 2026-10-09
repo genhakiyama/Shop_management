@@ -9,7 +9,7 @@ block content
             h1 Add new Product 
             p Create a new product for your shop 
         
-        form.product-form(action = "/product" , method = "POST") 
+        form.product-form(action = "/admin/product" , method = "POST") 
             .form-section 
                 h2 Product Information 
                 
@@ -30,7 +30,7 @@ block content
 
                     
                 .form-actions 
-                    a.canel-button(href = "/products") Cancel 
+                    a.canel-button(href = "/shop/products") Cancel 
                     button.submit-button(type = "submit") Add Product 
 
 

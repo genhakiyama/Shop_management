@@ -28,8 +28,8 @@ block content
           span.profile-badge ID #{user.id}
 
           .profile-actions
-            a.btn(href="/edit-profile") EDIT PROFILE
-            a.btn(href = "/Logout-profile") LOG OUT
+            a.btn(href=`/profile/edit-profile/${userID}`) EDIT PROFILE
+            a.btn(href = "/profile/Logout") LOG OUT
             a.btn.btn-alt(href="/orders") MY ORDERS
 
         //- ===== Right column: stats + extra =====

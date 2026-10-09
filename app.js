@@ -23,6 +23,12 @@ const path = require('path');
     const cookieParser = require('cookie-parser');
     const { doubleCsrf } = require('csrf-csrf');
 
+    /* Encrypt data */
+        const brcypt = require('bcrypt');
+
+    /* Authentication */
+        const isAuth = require('./Middleware/Authen.js');
+
 app.use(cookieParser());
 
 /* DATABASE */
@@ -70,10 +76,10 @@ app.use(cookieParser());
         res.render('home' , {pageTitle : 'Home' , path : '/home' , isVerified : req.session.isLoggedIn});
     });
 
-app.use(adminRoute);
-app.use(shopRoute);
-app.use(cartRoute);
-app.use(UserRoute);
+app.use('/admin' , isAuth , adminRoute);
+app.use('/shop' , shopRoute);
+app.use('/cart' , isAuth , cartRoute);
+app.use('/profile' , UserRoute);
 
 sequelize.sync({force : false})
     .then(result => {

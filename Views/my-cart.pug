@@ -10,7 +10,7 @@ block content
         p.cart-label YOUR SHOPPING BAG
         h1 Shopping Cart
         p Review your selected products before checkout.
-      a.continue-shopping(href="/products") ← Continue Shopping
+      a.continue-shopping(href="/shop/products") ← Continue Shopping
 
     if prods.length > 0
       .cart-layout
@@ -50,7 +50,7 @@ block content
             span Total
             strong $#{total}
           a.checkout-btn(href="/checkout") Proceed to Checkout
-          a.keep-shopping(href="/products") Continue Shopping →
+          a.keep-shopping(href="/shop/products") Continue Shopping →
 
     else
       section.empty-cart
@@ -58,4 +58,4 @@ block content
         p.cart-label YOUR SHOPPING BAG
         h2 Your Cart is Empty
         p Looks like you haven't added anything to your cart yet.
-        a.shop-now-btn(href="/products") Start Shopping
+        a.shop-now-btn(href="/shop/products") Start Shopping

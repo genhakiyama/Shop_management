@@ -13,11 +13,11 @@ html(lang="en")
         header.navbar.navbar-container 
             nav.nav-links 
                 a.nav-link(href = "/home" ,  class = (path === "/home" ? 'active' : '')) Home 
-                a.nav-link(href = "/products" , class = (path === "/products" ? 'active' : '')) Products 
+                a.nav-link(href = "/shop/products" , class = (path === "/shop/products" ? 'active' : '')) Products 
                 a.nav-link(href = "/profile" , class = ((path == "/profile" ? 'active' : ''))) Profile
                 if (isVerified) 
                     a.nav-link(href = "/orders" , class = (path === "/orders" ? 'active' : '')) Orders 
-                    a.nav-link(href = "/add-product" , class = (path === "/add-product" ? 'active' : '')) Add your product 
+                    a.nav-link(href = "/admin/add-product" , class = (path === "/admin/add-product" ? 'active' : '')) Add your product 
                     
             
             if (isVerified)
