@@ -1,5 +1,11 @@
 const User = require('../Module/user');
 
+exports.logout = (req , res , next) => {
+    req.session.destroy(err => {
+        res.redirect('/profile');
+    })
+};
+
 exports.log = (req , res , next) => {
     if (req.session.isLoggedIn) return res.redirect(`/profile/viewprofile/${req.session.userID}`);
     else {
@@ -27,7 +33,9 @@ exports.postProfile = (req , res , next) => {
                         return cart;
                 });
     })
-    .then(user => {
+    .then(cart => {
+        req.session.isVerified = true ;
+        req.session.userID = fetchUser.id;
         res.redirect(`/profile/viewprofile/${fetchUser.id}`);
     });
 };
@@ -68,6 +76,23 @@ exports.verifyAccount = (req , res , next) => {
             req.session.userID = user.id;
 
             return res.redirect(`/profile/viewprofile/${user.id}`);
+        })
+        .catch(err => {
+            console.log(err);
+        });
+};
+
+exports.updateProfile = (req , res , next) =>{
+    const id = req.session.userID;
+    User.findOne({
+        where : {
+            id : id
+        }
+    })
+        .then(user => {
+            user.imageProfile = req.body.imageProfile;
+            user.username = req.body.username;
+            user.save();
         })
         .catch(err => {
             console.log(err);

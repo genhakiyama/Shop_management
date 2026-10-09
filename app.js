@@ -81,7 +81,7 @@ app.use('/shop' , shopRoute);
 app.use('/cart' , isAuth , cartRoute);
 app.use('/profile' , UserRoute);
 
-sequelize.sync({force : true})
+sequelize.sync({force : false})
     .then(result => {
         app.listen(3000);
     })
