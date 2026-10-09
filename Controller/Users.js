@@ -14,7 +14,6 @@ exports.ViewProfile = (req , res , next) => {
             return users[0];
         })
         .then(user  => {
-            req.session.isLoggedIn = true;
             res.render('User_profile' , {user : user , pageTitle : 'USER PROFILE' , path : '/User_profile' , isVerified : req.session.isLoggedIn});
         })
         .catch(err => {
@@ -32,6 +31,7 @@ exports.verityAccount = (req , res , next) => {
         })
         .then(user => {
             if (!user) return res.redirect('/home');
+            req.session.isLoggedIn = true;
             return res.redirect('/profile/viewprofile');
         })
         .catch(err => {

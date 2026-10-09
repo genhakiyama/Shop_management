@@ -47,7 +47,11 @@ app.use(cookieParser());
     app.use(session({
         secret : "my-secret-key" , 
         resave : false , 
-        saveUninitialized : false 
+        saveUninitialized : false ,
+        cookie : {
+            httpOnly : true , 
+            maxAge : 1000 * 60 * 60
+        }
     }));    
 
 /* SETTING ROUTES */
