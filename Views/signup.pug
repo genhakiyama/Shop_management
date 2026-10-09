@@ -1,0 +1,35 @@
+extends layouts/header
+
+block content
+  link(rel="stylesheet", href="/css/create-an-account.css")
+
+  main.auth
+    section.auth-card
+      h1.auth-title Create account
+      p.auth-sub Join the shop in a few seconds
+
+      if error
+        p.auth-error= error
+
+      form.auth-form(action="/profile/signup", method="POST")
+        label.field
+          span Username
+          input(type="text", name="username", placeholder="retro_fan", required, minlength="3", maxlength="30", autocomplete="username")
+
+        label.field
+          span Email
+          input(type="email", name="email", placeholder="you@example.com", required, autocomplete="email")
+
+        label.field
+          span Password
+          input(type="password", name="password", placeholder="At least 6 characters", required, minlength="6", autocomplete="new-password")
+
+        label.field
+          span Profile image URL
+          input(type="url", name="imageProfile", placeholder="https://...", autocomplete="off")
+
+        button.btn(type="submit") Sign up
+
+      p.auth-foot
+        | Already have an account?
+        a(href="/login")  Log in    

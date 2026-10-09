@@ -1,0 +1,116 @@
+.auth {
+  min-height: calc(100vh - 70px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: #f4e9d1;
+  background-image: radial-gradient(#d9c9a3 1px, transparent 1px);
+  background-size: 14px 14px;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 420px;
+  padding: 32px 28px;
+  background: #fffaf0;
+  border: 3px solid #2b2118;
+  box-shadow: 8px 8px 0 #2b2118;
+  font-family: "Courier New", monospace;
+  color: #2b2118;
+}
+
+.auth-title {
+  margin: 0 0 4px;
+  font-size: 28px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.auth-sub {
+  margin: 0 0 20px;
+  font-size: 14px;
+  opacity: 0.75;
+}
+
+.auth-error {
+  margin: 0 0 16px;
+  padding: 10px 12px;
+  background: #ffd9d2;
+  border: 2px solid #b3261e;
+  color: #b3261e;
+  font-size: 14px;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.field input {
+  padding: 10px 12px;
+  font: inherit;
+  font-weight: normal;
+  text-transform: none;
+  letter-spacing: 0;
+  background: #fff;
+  color: #2b2118;
+  border: 2px solid #2b2118;
+  outline: none;
+}
+
+.field input:focus {
+  background: #fff3c4;
+  box-shadow: 3px 3px 0 #2b2118;
+}
+
+/* red border only after the user typed something invalid */
+.field input:not(:placeholder-shown):invalid {
+  border-color: #b3261e;
+}
+
+.btn {
+  margin-top: 4px;
+  padding: 12px;
+  font: inherit;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #fffaf0;
+  background: #d4572a;
+  border: 3px solid #2b2118;
+  box-shadow: 4px 4px 0 #2b2118;
+  cursor: pointer;
+  transition: transform 0.08s, box-shadow 0.08s;
+}
+
+.btn:hover {
+  background: #e0673a;
+}
+
+.btn:active {
+  transform: translate(4px, 4px);
+  box-shadow: 0 0 0 #2b2118;
+}
+
+.auth-foot {
+  margin: 20px 0 0;
+  font-size: 13px;
+  text-align: center;
+}
+
+.auth-foot a {
+  color: #d4572a;
+  font-weight: bold;
+}

@@ -7,6 +7,31 @@ exports.log = (req , res , next) => {
     }
 };
 
+exports.createProfile = (req , res , next) => {
+    res.render('signup' , {pageTitle : 'SIGN UP' , path : '/signup'});
+};
+
+exports.postProfile = (req , res , next) => {
+    let fetchUser;
+    User.create({
+        username: req.body.username , 
+        email : req.body.email , 
+        password : req.body.password , 
+        imageProfile : req.body.imageProfile
+    })
+    .then(user => {
+        fetchUser = user;
+        return user.getCart()
+                .then(cart => {
+                    if (!cart) return user.createCart();
+                        return cart;
+                });
+    })
+    .then(user => {
+        res.redirect(`/profile/viewprofile/${fetchUser.id}`);
+    });
+};
+
 exports.ViewProfile = (req , res , next) => {
     const userID = req.session.userID;
     User.findOne({where : {id : userID}})

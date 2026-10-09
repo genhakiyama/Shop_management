@@ -81,28 +81,8 @@ app.use('/shop' , shopRoute);
 app.use('/cart' , isAuth , cartRoute);
 app.use('/profile' , UserRoute);
 
-sequelize.sync({force : false})
+sequelize.sync({force : true})
     .then(result => {
-        return User.findByPk(1);
-    })
-    .then(user => {
-        if (!user) {
-            return User.create({
-                username : 'Nguyen' , 
-                email : 'Sandundertailroal@gmail.com' , 
-                password : '12345678'
-            })
-        }
-        return user ;
-    })
-    .then(user => {
-        return user.getCart()
-                        .then(cart => {
-                            if (!cart) return user.createCart();
-                            return cart;
-                        });
-    })
-    .then(cart => {
         app.listen(3000);
     })
     .catch(err => {

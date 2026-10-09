@@ -10,5 +10,7 @@ router.get('/edit-profile/:userID' , isAuth ,  isOwner  , Users.editProfile);
 // router.post('/profile/edit-profile/:userID' ,  isAuth , isOwner , Users.updateProfile);
 router.post('/login' ,Users.verifyAccount);
 router.get('/' , Users.log);
+router.get('/signup' , Users.createProfile);
+router.post('/signup' , Users.postProfile);
 
 module.exports = router;
