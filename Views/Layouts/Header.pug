@@ -14,13 +14,16 @@ html(lang="en")
             nav.nav-links 
                 a.nav-link(href = "/home" ,  class = (path === "/home" ? 'active' : '')) Home 
                 a.nav-link(href = "/products" , class = (path === "/products" ? 'active' : '')) Products 
-                a.nav-link(href = "/orders" , class = (path === "/orders" ? 'active' : '')) Orders 
-                a.nav-link(href = "/add-product" , class = (path === "/add-product" ? 'active' : '')) Add your product 
-                a.nav-link(href = "/profile" , class = ((path === "/profile" ? 'active' : ''))) Profile
-
-            .nav-actions 
-                a.nav-icon(href = "/cart" title = "Cart") 
-                    span 🛒
+                a.nav-link(href = "/profile" , class = ((path == "/profile" ? 'active' : ''))) Profile
+                if (isVerified) 
+                    a.nav-link(href = "/orders" , class = (path === "/orders" ? 'active' : '')) Orders 
+                    a.nav-link(href = "/add-product" , class = (path === "/add-product" ? 'active' : '')) Add your product 
+                    
+            
+            if (isVerified)
+                .nav-actions 
+                    a.nav-icon(href = "/cart" title = "Cart") 
+                        span 🛒
 
         block content 
                 

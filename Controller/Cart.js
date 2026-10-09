@@ -6,7 +6,6 @@ const updateCartTotal = cart => {
                 .then(products => {
                     const total = products.reduce((sum , p) => sum + p.price * p.cartItems.quantity , 0);
                     cart.total = total ;
-                    console.log(products);
                     return cart.save();
                 })
                 .catch(err => {
@@ -22,7 +21,7 @@ exports.cargoList = (req , res , next) => {
             fetchedCart = cart;
             return cart.getProducts()
                             .then(products => {                          
-                                res.render('my-cart' , {prods : products , total : fetchedCart.total , pageTitle : 'My cart' , path : '/my-cart'});
+                                res.render('my-cart' , {prods : products , total : fetchedCart.total , pageTitle : 'My cart' , path : '/my-cart' , isVerified : req.session.isLoggedIn});
                             })
         })
         .catch(err => {

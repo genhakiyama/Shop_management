@@ -4,7 +4,7 @@ exports.showProduct = (req , res , next) => {
     req.user
     .getProducts()
         .then(products => {
-            res.render('Products' , {prods : products , pageTitle : 'Products' , path : '/products'});
+            res.render('Products' , {prods : products , pageTitle : 'Products' , path : '/products' , isVerified : req.session.isLoggedIn});
         })
         .catch(err => {
             console.log(err);
@@ -25,7 +25,7 @@ exports.ProductDetails = (req , res , next) => {
             return products[0];
         })
         .then(product => {
-            res.render('ProductDetails' , {product : product , pageTittle : product.title , path : '/ProductDetails'});
+            res.render('ProductDetails' , {product : product , pageTittle : product.title , path : '/ProductDetails' , isVerified : req.session.isLoggedIn});
         })
         .catch(err => {
             console.log(err);

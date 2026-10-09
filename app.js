@@ -15,6 +15,16 @@ const path = require('path');
     const shopRoute = require('./Routes/shop');
     const cartRoute = require('./Routes/Cart');
     const UserRoute = require('./Routes/Users.js');
+
+/* Sessions and Cookie */
+    const session = require('express-session');
+    const MySQLStore = require('express-mysql-session')(session);
+
+    const cookieParser = require('cookie-parser');
+    const { doubleCsrf } = require('csrf-csrf');
+
+app.use(cookieParser());
+
 /* DATABASE */
     const sequelize = require('./Helpers/database');
     const Product = require('./Module/Product.js');
@@ -33,10 +43,14 @@ const path = require('path');
 /* SETTING VIEW ENGINE  */
     app.set('view engine' , 'pug');
     app.set('views' , 'Views');
+/* SESSION */
+    app.use(session({
+        secret : "my-secret-key" , 
+        resave : false , 
+        saveUninitialized : false 
+    }));    
 
 /* SETTING ROUTES */
-
-
     app.use((req , res , next) => {
         User.findByPk(1)
             .then(user => {
@@ -49,10 +63,10 @@ const path = require('path');
     });
 
     app.get('/home' , (req , res , next) => { 
-        res.render('home' , {pageTitle : 'Home' , path : '/home'});
+        res.render('home' , {pageTitle : 'Home' , path : '/home' , isVerified : req.session.isLoggedIn});
     });
 
-app.use(adminRoute) ;
+app.use(adminRoute);
 app.use(shopRoute);
 app.use(cartRoute);
 app.use(UserRoute);
@@ -65,7 +79,8 @@ sequelize.sync({force : false})
         if (!user) {
             return User.create({
                 username : 'Nguyen' , 
-                email : 'Sandundertailroal@gmail.com'
+                email : 'Sandundertailroal@gmail.com' , 
+                password : '12345678'
             })
         }
         return user ;

@@ -2,7 +2,7 @@ const { Op } = require('sequelize');
 const Product = require('../Module/Product');
 
 exports.getAddProduct = (req , res , next) => {
-    res.render('add-product' , {pageTitle : 'Add product' , path : "/add-product"});
+    res.render('add-product' , {pageTitle : 'Add product' , path : "/add-product" , isVerified : req.session.isLoggedIn});
 };
 
 exports.postProduct = (req , res , next) => {
@@ -49,7 +49,7 @@ exports.EditProduct = (req , res , next) => {
             return products[0];
         })
         .then(prod => {
-             res.render('edit-product' , {product : prod , pageTittle : 'Edit product' , path : '/edit-product' , editing : editMode});
+             res.render('edit-product' , {product : prod , pageTittle : 'Edit product' , path : '/edit-product' , editing : editMode , isVerified : req.session.isLoggedIn});
         })
         .catch(err => {
             console.log(err);
