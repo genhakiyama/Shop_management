@@ -1,19 +1,23 @@
 const Product = require('../Module/Product');
 
 exports.showProduct = (req , res , next) => {
+    if (!req.user) {
+        return res.render('Products' , {prods : [] , pageTitle : 'Products' , path : '/products' , isVerified : req.session.isLoggedIn});
+    }
+
     req.user
     .getProducts()
         .then(products => {
             res.render('Products' , {prods : products , pageTitle : 'Products' , path : '/products' , isVerified : req.session.isLoggedIn});
         })
         .catch(err => {
-            console.log(err);
+            res.render('Products' , {prods : [] , pageTitle : 'Products' , path : '/products' , isVerified : req.session.isLoggedIn});
         });
 };
 
 exports.ProductDetails = (req , res , next) => {
     const id = req.params.productID;
-
+    
    req.user
         .getProducts({
             where : {
@@ -25,7 +29,7 @@ exports.ProductDetails = (req , res , next) => {
             return products[0];
         })
         .then(product => {
-            res.render('ProductDetails' , {product : product , pageTittle : product.title , path : '/ProductDetails' , isVerified : req.session.isLoggedIn});
+            res.render('ProductDetails' , {product : product , pageTittle : product.title , path : '/ProductDetails' , isVerified : req.session.isLoggedIn , userID : req.session.userID});
         })
         .catch(err => {
             console.log(err);

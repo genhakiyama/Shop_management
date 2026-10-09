@@ -16,7 +16,7 @@ block content
           i
           i
 
-      form.edit-form(action="/product", method="POST")
+      form.edit-form(action="/admin/product", method="POST")
         input(type="hidden", name="id", value=product.id)
 
         //- Left: image
@@ -50,6 +50,6 @@ block content
 
           .edit-actions
             button.btn.btn-save(type="submit") Save changes
-            a.btn.btn-cancel(href="/products") Cancel
-            button.btn.btn-delete(type="submit", formaction=`/product/delete-product/${product.id}`, onclick="return confirm('Delete this product?')") Delete product
+            a.btn.btn-cancel(href="/shop/products") Cancel
+            button.btn.btn-delete(type="submit", formaction=`/admin/product/delete-product/${product.id}`, onclick="return confirm('Delete this product?')") Delete product
 

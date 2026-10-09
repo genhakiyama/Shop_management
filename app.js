@@ -23,6 +23,12 @@ const path = require('path');
     const cookieParser = require('cookie-parser');
     const { doubleCsrf } = require('csrf-csrf');
 
+    /* Encrypt data */
+        const brcypt = require('bcrypt');
+
+    /* Authentication */
+        const isAuth = require('./Middleware/Authen.js');
+
 app.use(cookieParser());
 
 /* DATABASE */
@@ -47,7 +53,11 @@ app.use(cookieParser());
     app.use(session({
         secret : "my-secret-key" , 
         resave : false , 
-        saveUninitialized : false 
+        saveUninitialized : false ,
+        cookie : {
+            httpOnly : true , 
+            maxAge : 1000 * 60 * 60
+        }
     }));    
 
 /* SETTING ROUTES */
@@ -66,33 +76,13 @@ app.use(cookieParser());
         res.render('home' , {pageTitle : 'Home' , path : '/home' , isVerified : req.session.isLoggedIn});
     });
 
-app.use(adminRoute);
-app.use(shopRoute);
-app.use(cartRoute);
-app.use(UserRoute);
+app.use('/admin' , isAuth , adminRoute);
+app.use('/shop' , shopRoute);
+app.use('/cart' , isAuth , cartRoute);
+app.use('/profile' , UserRoute);
 
 sequelize.sync({force : false})
     .then(result => {
-        return User.findByPk(1);
-    })
-    .then(user => {
-        if (!user) {
-            return User.create({
-                username : 'Nguyen' , 
-                email : 'Sandundertailroal@gmail.com' , 
-                password : '12345678'
-            })
-        }
-        return user ;
-    })
-    .then(user => {
-        return user.getCart()
-                        .then(cart => {
-                            if (!cart) return user.createCart();
-                            return cart;
-                        });
-    })
-    .then(cart => {
         app.listen(3000);
     })
     .catch(err => {

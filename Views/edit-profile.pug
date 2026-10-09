@@ -1,0 +1,54 @@
+extends layouts/header.pug
+
+block styles
+  link(rel="preconnect", href="https://fonts.googleapis.com")
+  link(rel="stylesheet", href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap")
+  link(rel="stylesheet", href="/css/edit-profile.css")
+
+block content
+  main.edit-page
+    section.edit-window
+      .window-bar
+        span.window-title EDIT_PROFILE.EXE
+        .window-buttons
+          span _
+          span □
+          span ×
+
+      form.window-body(action=`/profile/edit-profile/${user.id}`, method="POST")
+        //- ===== Left column: live avatar preview =====
+        aside.edit-side
+          .avatar-frame
+            img#avatar-preview.avatar(src=user.imageProfile || "", alt="Avatar preview", class=(user.imageProfile ? "" : "is-hidden"))
+            .avatar.avatar-empty#avatar-empty(class=(user.imageProfile ? "is-hidden" : "")) ?
+          h1.edit-heading Edit your
+            span.accent  profile.
+          p.edit-text Change your name, email and avatar. The preview updates as you type.
+          span.profile-badge ID #{user.id}
+
+        //- ===== Right column: form fields =====
+        .edit-main
+          .section-title ► YOUR DETAILS
+
+          if error
+            p.form-message.is-error= error
+          if success
+            p.form-message.is-success= success
+
+          .field
+            label(for="username") Username
+            input#username(type="text", name="username", value=user.username, required)
+
+          .field
+            label(for="email") Email
+            input#email(type="email", name="email", value=user.email, required)
+
+          .field
+            label(for="imageProfile") Avatar image URL
+            input#imageProfile(type="text", name="imageProfile", value=user.imageProfile || "", placeholder="https://... or /images/avatar.png")
+
+          //- EXTEND: add more fields here (phone, address, bio, ...)
+
+          .edit-actions
+            button.btn(type="submit") SAVE CHANGES
+            a.btn.btn-alt(href="/profile") CANCEL

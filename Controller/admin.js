@@ -28,7 +28,7 @@ exports.postProduct = (req , res , next) => {
                 product.save();
             })
             .then(result => {
-                res.redirect('/products');
+                res.redirect('/shop/products');
             })
             .catch(err => {
                 console.log(err);
@@ -63,7 +63,7 @@ exports.RemoveProduct = (req , res , next) => {
             return product.destroy();
         })
         .then(result => {
-            res.redirect('/products');
+            res.redirect('/shop/products');
         })
         .catch(err => {
             console.log(err);

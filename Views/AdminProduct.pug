@@ -28,10 +28,9 @@ block content
 
           .product-actions
             a.btn.btn-cart(href=`/cart/add/${product.id}`) Add to Cart
-            if (isVerified)
-              a.btn.btn-buy(href=`/admin/product/edit-product/${product.id}?edit=true`) Edit details
+            a.btn.btn-buy(href=`/admin/product/edit-product/${product.id}?edit=true`) Edit details
     else
       .product-not-found
         h1 Product Not Found
         p Sorry, we couldn't find the product you're looking for.
-        a.btn.btn-back(href="/shop/products") Back to Products
+        a.btn.btn-back(href="/products") Back to Products
