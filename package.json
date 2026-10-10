@@ -1,0 +1,36 @@
+{
+  "name": "node-start",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/genhakiyama/Nodejs_learning#readme",
+  "bugs": {
+    "url": "https://github.com/genhakiyama/Nodejs_learning/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/genhakiyama/Nodejs_learning.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "Testing.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start-server": "node Testing.js"
+  },
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "body-parser": "^2.3.0",
+    "brcypt": "^1.0.1",
+    "cookie-parser": "^1.4.7",
+    "csrf-csrf": "^4.0.3",
+    "dotenv": "^18.0.7",
+    "express": "^5.2.1",
+    "express-mysql-session": "^3.0.3",
+    "express-session": "^1.19.0",
+    "mysql2": "^3.24.5",
+    "nodemailer": "^10.1.0",
+    "pug": "^3.0.4",
+    "sequelize": "^6.37.8"
+  }
+}
