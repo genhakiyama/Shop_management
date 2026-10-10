@@ -1,12 +1,7 @@
 const Product = require('../Module/Product');
 
 exports.showProduct = (req , res , next) => {
-    if (!req.user) {
-        return res.render('Products' , {prods : [] , pageTitle : 'Products' , path : '/products' , isVerified : req.session.isLoggedIn});
-    }
-
-    req.user
-    .getProducts()
+    Product.findAll()
         .then(products => {
             res.render('Products' , {prods : products , pageTitle : 'Products' , path : '/products' , isVerified : req.session.isLoggedIn});
         })
@@ -18,24 +13,20 @@ exports.showProduct = (req , res , next) => {
 exports.ProductDetails = (req , res , next) => {
     const id = req.params.productID;
     
-   req.user
-        .getProducts({
-            where : {
-                id : id 
-            }
-        })
-        .then(products => {
-            if (!products) return res.redirect('/home');
-            return products[0];
-        })
+   Product.findOne({
+    where : {
+        id : id 
+    } })
         .then(product => {
+            if (!product) return res.redirect('/shop/products');
             res.render('ProductDetails' , 
             {   
                 product : product , 
                 pageTittle : product.title , 
                 path : '/ProductDetails' , 
                 isVerified : req.session.isLoggedIn , 
-                userID : req.session.userID
+                userID : req.session.userID , 
+                editMode : req.session.userID == product.userId
             });
         })
         .catch(err => {

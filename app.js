@@ -66,20 +66,28 @@ app.use(cookieParser());
     }));    
 
 /* SETTING ROUTES */
+
+    app.get('/home' , (req , res , next) => { 
+        res.render('home' , {pageTitle : 'Home' , path : '/home' , isVerified : req.session.isLoggedIn});
+    });
+
     app.use((req , res , next) => {
-        User.findByPk(1)
+        User.findOne({
+            where :
+            {
+                id : req.session.userID
+            }})
             .then(user => {
+                if (!user) return next();
                 req.user = user ;
                 next();
             })
             .catch(err => {
                 console.log(err);
+                next();
             });
     });
 
-    app.get('/home' , (req , res , next) => { 
-        res.render('home' , {pageTitle : 'Home' , path : '/home' , isVerified : req.session.isLoggedIn});
-    });
 
 app.use('/admin' , isAuth , adminRoute);
 app.use('/shop' , shopRoute);

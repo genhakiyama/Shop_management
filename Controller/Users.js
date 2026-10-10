@@ -30,7 +30,7 @@ exports.postProfile = (req , res , next) => {
     let fetchUser;
     User.findOne({
         where : {
-            username : username
+            email : email
         }})
         .then(user => {
             if (!user) {
