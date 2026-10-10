@@ -15,7 +15,7 @@ const updateCartTotal = cart => {
 
 exports.cargoList = (req , res , next) => {
     let fetchedCart;
-    req.user 
+    req.user
         .getCart()
         .then(cart => {
             fetchedCart = cart;
