@@ -28,8 +28,8 @@ block content
 
           .product-actions
             a.btn.btn-cart(href=`/cart/add/${product.id}`) Add to Cart
-            if (isVerified)
-              a.btn.btn-buy(href=`/admin/product/edit-product/${product.id}?edit=true`) Edit details
+            if (isVerified && editMode)
+              a.btn.btn-buy(href=`/admin/product/edit-product/${product.id}`) Edit details
     else
       .product-not-found
         h1 Product Not Found

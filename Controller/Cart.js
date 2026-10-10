@@ -16,7 +16,11 @@ const updateCartTotal = cart => {
 exports.cargoList = (req , res , next) => {
     let fetchedCart;
     req.user
-        .getCart()
+        .getCart({
+            where : {
+                userId : req.session.userID
+            }
+        })
         .then(cart => {
             fetchedCart = cart;
             return cart.getProducts()
@@ -32,9 +36,13 @@ exports.cargoList = (req , res , next) => {
 exports.AddToCart = (req , res , next) => {
     const id = req.params.cartID;
     let fetchedCart;
-    let new_quantity = 1;
+    let new_quantity = 1;;
     req.user
-        .getCart()
+        .getCart({
+            where : {
+                userId : req.session.userID
+            }
+        })
         .then(cart => {
             fetchedCart = cart;
             return cart.getProducts({where : {id : id}});
@@ -66,7 +74,11 @@ exports.AddToCart = (req , res , next) => {
 exports.RemoveCart = (req , res , next) => {
     const id = req.params.cartID;
     req.user
-        .getCart()
+        .getCart({
+            where : {
+                userId : req.session.userID
+            }
+        })
         .then(cart => {
             fetchedCart = cart;
             return cart.getProducts({where : {id : id}});
