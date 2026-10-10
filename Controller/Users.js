@@ -27,61 +27,71 @@ exports.postProfile = (req , res , next) => {
     const {username , email , password , imageProfile} = req.body;
     const {token , hashedToken} = TokenHelper.generateToken();
 
-    console.log(`SUPERFIASDAS ${token}  ${hashedToken}`);
-
     let fetchUser;
-
-    bcrypt.hash(password , 12)
-        .then(hashedPassword => {   
-            return User.create({
-                username , 
-                email , 
-                password : hashedPassword ,
-                imageProfile , 
-
-                isVerified : false , 
-                verificationToken : hashedToken , 
-                verificationTokenExpires : 
-                    new Date(Date.now() + 15 * 60 * 10000)
-            });
-        })
+    User.findOne({
+        where : {
+            username : username
+        }})
         .then(user => {
-            fetchUser = user  ;
-            res.status(201).render('check-email' , {PageTitle : 'Verify your email' , email});
-            return EmailHelper.sendVerification(email , token);
-        })
-        .catch(err => {
-            console.log(err);
-        })
+            if (!user) {
+                return bcrypt.hash(password , 12)
+                            .then(hashedPassword => {   
+                                return User.create({
+                                    username , 
+                                    email , 
+                                    password : hashedPassword ,
+                                    imageProfile , 
+
+                                    isVerified : false , 
+                                    verificationToken : hashedToken , 
+                                    verificationTokenExpires : 
+                                        new Date(Date.now() + 15 * 60 * 10000)
+                                });
+                            })
+                            .then(user => {
+                                fetchUser = user  ;
+                                res.status(201).render('check-email' , {PageTitle : 'Verify your email' , email});
+                                return EmailHelper.sendVerification(email , token);
+                            })
+                            .catch(err => {
+                                console.log(err);
+                            });
+            }
+            return res.status(409).render('error' , {errorMessage : "Username has been used"});
+        });
 };
 
 exports.getVerifyEmail = (req , res , next) => {
     const { token } = req.query;
 
     if (!token || typeof token !== 'string') {
-        return res.status(404).send('Invalid verification link');
+        return res.status(404).render('error' , {errorMessage : 'Invalid verification link'});
     }
 
     const hashedToken = crypto 
                             .createHash('sha256')
                             .update(token)
                             .digest('hex');
+
     User.findOne({
         where : {
             verificationToken : hashedToken
         }})
         .then(user => {
             if (!user || !user.verificationToken || user.verificationTokenExpires <= new Date()) 
-                return res.status(400).send('Invalid or expired verification link');
+                return res.status(400).render('error' , {errorMessage : 'Invalid or expired verification link'});
 
             return user.update({
                 isVerified : true , 
                 verificationToken : null , 
                 verificationTokenExpires : null
-            })
+            });
         })
-        .then(result => {
-            if (!result) return;
+        .then(user => {
+            if (!user) return;
+            req.session.isLoggedIn = true;
+            req.session.userID = user.id;
+            user.createCart();
             return res.send('Email verified sucessfully');
         })
 };
@@ -115,8 +125,7 @@ exports.verifyAccount = (req , res , next) => {
             }
         })
         .then(user => {
-            if (!user) return res.redirect('/profile');
-            console.log(req.body.password);
+            if (!user || !user.isVerified) return res.redirect('/profile');
             return bcrypt.compare(req.body.password , user.password)
                             .then(isMatch => {
                                 if (!isMatch) return res.redirect('/profile');

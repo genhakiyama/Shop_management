@@ -29,7 +29,14 @@ exports.ProductDetails = (req , res , next) => {
             return products[0];
         })
         .then(product => {
-            res.render('ProductDetails' , {product : product , pageTittle : product.title , path : '/ProductDetails' , isVerified : req.session.isLoggedIn , userID : req.session.userID});
+            res.render('ProductDetails' , 
+            {   
+                product : product , 
+                pageTittle : product.title , 
+                path : '/ProductDetails' , 
+                isVerified : req.session.isLoggedIn , 
+                userID : req.session.userID
+            });
         })
         .catch(err => {
             console.log(err);

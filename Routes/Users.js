@@ -17,6 +17,6 @@ router.post('/signup' , Users.postProfile);
 
 router.post('/Logout' , isAuth , Users.logout);
 
-router.get('/profile/auth/verify-Email/:token' , Users.getVerifyEmail);
+router.get('/auth/verify-Email/' , Users.getVerifyEmail);
 
 module.exports = router;
