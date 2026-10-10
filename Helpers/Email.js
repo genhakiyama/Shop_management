@@ -10,7 +10,7 @@ const transporter = nodemailer.createTransport({
 });
 
 exports.sendVerification = (email , token) => {
-    const link = `${process.env.BASE_URL}/auth/verify-email-email?token=${token}`;
+    const link = `${process.env.BASE_URL}/profile/auth/verify-Email?token=${token}`;
     return transporter.sendMail({
         from : process.env.EMAIL_USER , 
         to : email , 

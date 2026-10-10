@@ -1,5 +1,6 @@
 const User = require('../Module/user');
 const bcrypt = require('bcrypt');
+const crypto = require('crypto');
 
 const EmailHelper = require('../Helpers/Email');
 const TokenHelper = require('../Helpers/Token');
@@ -24,12 +25,14 @@ exports.createProfile = (req , res , next) => {
 
 exports.postProfile = (req , res , next) => {
     const {username , email , password , imageProfile} = req.body;
-    const {Token , hashedToken} = TokenHelper.generateToken();
+    const {token , hashedToken} = TokenHelper.generateToken();
+
+    console.log(`SUPERFIASDAS ${token}  ${hashedToken}`);
 
     let fetchUser;
 
     bcrypt.hash(password , 12)
-        .then(hashedPassword => {  
+        .then(hashedPassword => {   
             return User.create({
                 username , 
                 email , 
@@ -44,15 +47,42 @@ exports.postProfile = (req , res , next) => {
         })
         .then(user => {
             fetchUser = user  ;
-            return EmailHelper.sendVerification(email , Token);
-        })
-        .then(() => {
-            return res.status(201).render('check-email' , {
-                email
-            });
+            res.status(201).render('check-email' , {PageTitle : 'Verify your email' , email});
+            return EmailHelper.sendVerification(email , token);
         })
         .catch(err => {
             console.log(err);
+        })
+};
+
+exports.getVerifyEmail = (req , res , next) => {
+    const { token } = req.query;
+
+    if (!token || typeof token !== 'string') {
+        return res.status(404).send('Invalid verification link');
+    }
+
+    const hashedToken = crypto 
+                            .createHash('sha256')
+                            .update(token)
+                            .digest('hex');
+    User.findOne({
+        where : {
+            verificationToken : hashedToken
+        }})
+        .then(user => {
+            if (!user || !user.verificationToken || user.verificationTokenExpires <= new Date()) 
+                return res.status(400).send('Invalid or expired verification link');
+
+            return user.update({
+                isVerified : true , 
+                verificationToken : null , 
+                verificationTokenExpires : null
+            })
+        })
+        .then(result => {
+            if (!result) return;
+            return res.send('Email verified sucessfully');
         })
 };
 

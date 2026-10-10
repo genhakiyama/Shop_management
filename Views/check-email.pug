@@ -1,0 +1,28 @@
+extends layouts/header
+
+block content
+  link(rel="stylesheet", href="/css/CheckEmail.css")
+
+  main.check-email
+    section.check-email__card
+      .check-email__icon ✉
+
+      h1.check-email__title Check your inbox
+
+      p.check-email__text
+        | We sent a verification link to
+      p.check-email__email= email
+
+      p.check-email__text
+        | Click the link in that email to activate your account.
+        | The link expires in
+        strong  15 minutes
+        | .
+
+      ul.check-email__tips
+        li Can't find it? Check your spam or promotions folder.
+        li Make sure the address above is spelled correctly.
+
+      .check-email__actions
+        a.btn.btn--primary(href="/profile") Go to login
+        a.btn.btn--ghost(href="/profile/signup") Use a different email
