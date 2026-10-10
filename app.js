@@ -1,3 +1,8 @@
+require('dotenv').config();
+const crypto = require('crypto');
+
+const token = crypto.randomBytes(32).toString('hex');
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const rootDir = require('./Helpers/path.js');
@@ -51,7 +56,7 @@ app.use(cookieParser());
     app.set('views' , 'Views');
 /* SESSION */
     app.use(session({
-        secret : "my-secret-key" , 
+        secret : process.env.SESSION_SECRET, 
         resave : false , 
         saveUninitialized : false ,
         cookie : {

@@ -1,0 +1,103 @@
+.error-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 70vh;
+  padding: 24px;
+  background: #f4ecd8;
+  font-family: "Courier New", Courier, monospace;
+}
+
+.error-card {
+  width: 100%;
+  max-width: 460px;
+  background: #fffaf0;
+  border: 3px solid #2b2b2b;
+  box-shadow: 8px 8px 0 #2b2b2b;
+}
+
+.error-title-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  background: #c0392b;
+  color: #fffaf0;
+  border-bottom: 3px solid #2b2b2b;
+  letter-spacing: 3px;
+  font-weight: bold;
+}
+
+.error-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.error-dots i {
+  width: 12px;
+  height: 12px;
+  background: #fffaf0;
+  border: 2px solid #2b2b2b;
+  display: block;
+}
+
+.error-body {
+  padding: 28px 24px;
+  text-align: center;
+}
+
+.error-icon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 16px;
+  line-height: 58px;
+  font-size: 40px;
+  font-weight: bold;
+  color: #c0392b;
+  border: 3px solid #2b2b2b;
+  background: #f9d949;
+  box-shadow: 4px 4px 0 #2b2b2b;
+}
+
+.error-heading {
+  margin: 0 0 12px;
+  font-size: 22px;
+  text-transform: uppercase;
+  color: #2b2b2b;
+}
+
+.error-message {
+  margin: 0 0 24px;
+  padding: 10px 12px;
+  background: #fde8e4;
+  border: 2px dashed #c0392b;
+  color: #7a1f14;
+  font-size: 16px;
+}
+
+.error-actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.error-btn {
+  padding: 10px 18px;
+  background: #f9d949;
+  color: #2b2b2b;
+  border: 3px solid #2b2b2b;
+  box-shadow: 4px 4px 0 #2b2b2b;
+  text-decoration: none;
+  font-weight: bold;
+  text-transform: uppercase;
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+
+.error-btn:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 #2b2b2b;
+}
+
+.error-btn-alt {
+  background: #fffaf0;
+}

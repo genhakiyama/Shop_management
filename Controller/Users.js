@@ -1,7 +1,12 @@
 const User = require('../Module/user');
 const bcrypt = require('bcrypt');
+const crypto = require('crypto');
+
+const EmailHelper = require('../Helpers/Email');
+const TokenHelper = require('../Helpers/Token');
 
 exports.logout = (req , res , next) => {
+    res.clearCookie('connect.sid');
     req.session.destroy(err => {
         res.redirect('/profile');
     })
@@ -19,30 +24,76 @@ exports.createProfile = (req , res , next) => {
 };
 
 exports.postProfile = (req , res , next) => {
+    const {username , email , password , imageProfile} = req.body;
+    const {token , hashedToken} = TokenHelper.generateToken();
+
     let fetchUser;
-    
-    bcrypt.hash(req.body.password , 12)
-    .then(hashedPassword =>{
-        return User.create({
-            username: req.body.username , 
-            email : req.body.email , 
-            password :  hashedPassword , 
-            imageProfile : req.body.imageProfile
+    User.findOne({
+        where : {
+            username : username
+        }})
+        .then(user => {
+            if (!user) {
+                return bcrypt.hash(password , 12)
+                            .then(hashedPassword => {   
+                                return User.create({
+                                    username , 
+                                    email , 
+                                    password : hashedPassword ,
+                                    imageProfile , 
+
+                                    isVerified : false , 
+                                    verificationToken : hashedToken , 
+                                    verificationTokenExpires : 
+                                        new Date(Date.now() + 15 * 60 * 10000)
+                                });
+                            })
+                            .then(user => {
+                                fetchUser = user  ;
+                                res.status(201).render('check-email' , {PageTitle : 'Verify your email' , email});
+                                return EmailHelper.sendVerification(email , token);
+                            })
+                            .catch(err => {
+                                console.log(err);
+                            });
+            }
+            return res.status(409).render('error' , {errorMessage : "Username has been used"});
         });
-    })
-    .then(user => {
-        fetchUser = user;
-        return user.getCart()
-                .then(cart => {
-                    if (!cart) return user.createCart();
-                        return cart;
-                });
-    })
-    .then(cart => {
-        req.session.isLoggedIn = true ;
-        req.session.userID = fetchUser.id;
-        res.redirect(`/profile/viewprofile/${fetchUser.id}`);
-    });
+};
+
+exports.getVerifyEmail = (req , res , next) => {
+    const { token } = req.query;
+
+    if (!token || typeof token !== 'string') {
+        return res.status(404).render('error' , {errorMessage : 'Invalid verification link'});
+    }
+
+    const hashedToken = crypto 
+                            .createHash('sha256')
+                            .update(token)
+                            .digest('hex');
+
+    User.findOne({
+        where : {
+            verificationToken : hashedToken
+        }})
+        .then(user => {
+            if (!user || !user.verificationToken || user.verificationTokenExpires <= new Date()) 
+                return res.status(400).render('error' , {errorMessage : 'Invalid or expired verification link'});
+
+            return user.update({
+                isVerified : true , 
+                verificationToken : null , 
+                verificationTokenExpires : null
+            });
+        })
+        .then(user => {
+            if (!user) return;
+            req.session.isLoggedIn = true;
+            req.session.userID = user.id;
+            user.createCart();
+            return res.send('Email verified sucessfully');
+        })
 };
 
 exports.ViewProfile = (req , res , next) => {
@@ -74,8 +125,7 @@ exports.verifyAccount = (req , res , next) => {
             }
         })
         .then(user => {
-            if (!user) return res.redirect('/profile');
-            console.log(req.body.password);
+            if (!user || !user.isVerified) return res.redirect('/profile');
             return bcrypt.compare(req.body.password , user.password)
                             .then(isMatch => {
                                 if (!isMatch) return res.redirect('/profile');
