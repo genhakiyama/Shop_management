@@ -11,7 +11,23 @@ const User = sequelize.define('user' , {
     username : Sequelize.STRING , 
     email : Sequelize.STRING ,
     password : Sequelize.STRING , 
-    imageProfile : Sequelize.STRING
+    imageProfile : Sequelize.STRING , 
+
+    isVerified : {
+        type : Sequelize.BOOLEAN , 
+        defaultValue : false , 
+        allowNull : false 
+    },
+
+    verificationToken : {
+        type : Sequelize.STRING(64) , 
+        allowNull : true 
+    } , 
+
+    verificationTokenExpires : {
+        type : Sequelize.DATE , 
+        allowNull : true 
+    }
 });
 
 module.exports = User;

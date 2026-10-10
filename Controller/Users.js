@@ -1,7 +1,11 @@
 const User = require('../Module/user');
 const bcrypt = require('bcrypt');
 
+const EmailHelper = require('../Helpers/Email');
+const TokenHelper = require('../Helpers/Token');
+
 exports.logout = (req , res , next) => {
+    res.clearCookie('connect.sid');
     req.session.destroy(err => {
         res.redirect('/profile');
     })
@@ -19,30 +23,37 @@ exports.createProfile = (req , res , next) => {
 };
 
 exports.postProfile = (req , res , next) => {
+    const {username , email , password , imageProfile} = req.body;
+    const {Token , hashedToken} = TokenHelper.generateToken();
+
     let fetchUser;
-    
-    bcrypt.hash(req.body.password , 12)
-    .then(hashedPassword =>{
-        return User.create({
-            username: req.body.username , 
-            email : req.body.email , 
-            password :  hashedPassword , 
-            imageProfile : req.body.imageProfile
-        });
-    })
-    .then(user => {
-        fetchUser = user;
-        return user.getCart()
-                .then(cart => {
-                    if (!cart) return user.createCart();
-                        return cart;
-                });
-    })
-    .then(cart => {
-        req.session.isLoggedIn = true ;
-        req.session.userID = fetchUser.id;
-        res.redirect(`/profile/viewprofile/${fetchUser.id}`);
-    });
+
+    bcrypt.hash(password , 12)
+        .then(hashedPassword => {  
+            return User.create({
+                username , 
+                email , 
+                password : hashedPassword ,
+                imageProfile , 
+
+                isVerified : false , 
+                verificationToken : hashedToken , 
+                verificationTokenExpires : 
+                    new Date(Date.now() + 15 * 60 * 10000)
+            });
+        })
+        .then(user => {
+            fetchUser = user  ;
+            return EmailHelper.sendVerification(email , Token);
+        })
+        .then(() => {
+            return res.status(201).render('check-email' , {
+                email
+            });
+        })
+        .catch(err => {
+            console.log(err);
+        })
 };
 
 exports.ViewProfile = (req , res , next) => {
