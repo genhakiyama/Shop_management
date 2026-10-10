@@ -1,59 +1,43 @@
-# Shop Management System
+# Shop Management
 
-A web-based shop management application built with Node.js and Express.js. The project aims to help shopkeepers manage products, handle shopping carts, and organize essential shop operations through a web interface.
+A shop management web application built with Node.js and Express.js. This project focuses on learning backend development, database management, authentication, and e-commerce workflows.
 
 ## Features
 
-- **Product Management**: View product listings and product details.
-- **Shopping Cart**: Add products to the cart, manage cart items, and calculate the total price.
+- **Product Management**: Manage product information, including titles, prices, descriptions, and image URLs.
+- **Shopping Cart**: Add products to the cart, manage cart items, and calculate totals.
 - **User Authentication**: Handle user login and session-based authentication.
-- **User Profiles**: View and update user profile information.
-- **Password Security**: Hash passwords using bcrypt.
-- **Email Verification**: Support email verification workflows.
+- **Password Security**: Hash and verify passwords using bcrypt.
+- **Email Verification**: Support email verification workflows using tokens.
 - **Database Integration**: Use Sequelize ORM to interact with a MySQL database.
-- **Server-Side Rendering**: Render dynamic web pages using Pug templates.
+- **Server-side Rendering**: Render dynamic web pages using Pug templates.
+
+> Update this section to reflect the features currently implemented in the repository.
 
 ## Tech Stack
 
-| Technology | Purpose |
-|---|---|
-| Node.js | JavaScript runtime |
-| Express.js | Web application framework |
-| Sequelize | Object-relational mapping (ORM) |
-| MySQL | Relational database |
-| Pug | Server-side templating engine |
-| express-session | Session management |
-| bcrypt | Password hashing |
-| Nodemailer | Email delivery |
-| dotenv | Environment variable management |
+- **Runtime:** Node.js
+- **Web Framework:** Express.js
+- **Database:** MySQL
+- **ORM:** Sequelize
+- **Template Engine:** Pug
+- **Authentication:** Express Session
+- **Password Hashing:** bcrypt
+- **Email Service:** Nodemailer
+- **Environment Configuration:** dotenv
 
-## Project Structure
+## Prerequisites
 
-```text
-Shop_management/
-├── Controller/      # Request handling and business logic
-├── Helpers/         # Reusable utility functions
-├── Middleware/      # Authentication and request middleware
-├── Module/          # Data models and database operations
-├── Routes/          # Application route definitions
-├── Views/           # Pug templates
-├── public/
-│   └── css/         # Stylesheets
-├── app.js           # Application entry point
-├── .gitignore
-├── nodemon.json
-└── README.md
-```
-
-## Getting Started
-
-### Prerequisites
-
-Make sure you have installed:
+Before running the project, make sure you have installed:
 
 - [Node.js](https://nodejs.org/)
 - npm (included with Node.js)
-- [MySQL](https://www.mysql.com/)
+- [MySQL Server](https://dev.mysql.com/downloads/mysql/)
+- Git
+
+A code editor such as Visual Studio Code is recommended.
+
+## Installation
 
 ### 1. Clone the repository
 
@@ -64,92 +48,183 @@ cd Shop_management
 
 ### 2. Install dependencies
 
-Install the dependencies declared by the project:
-
 ```bash
 npm install
 ```
 
-If the project does not yet have a `package.json` with all required dependencies, configure it before proceeding.
+### 3. Create a MySQL database
 
-### 3. Configure environment variables
+Start your MySQL server and log in:
 
-Create a `.env` file in the project root and configure the database connection and other required secrets.
-
-```env
-PORT=3000
-
-DB_HOST=localhost
-DB_PORT=3306
-DB_NAME=shop_management
-DB_USER=your_mysql_username
-DB_PASSWORD=your_mysql_password
-
-SESSION_SECRET=your_session_secret
-
-BASE_URL=http://localhost:3000
-
-EMAIL_USER=your_email_address
-EMAIL_PASSWORD=your_email_app_password
+```bash
+mysql -u root -p
 ```
 
-Replace the example values with your local configuration. The exact variable names must match those referenced in your source code.
-
-**Security:** Never commit your `.env` file or expose database passwords, session secrets, or email credentials. Add `.env` to `.gitignore` and consider providing a `.env.example` containing placeholder values.
-
-### 4. Set up the database
-
-Create the MySQL database configured in your `.env` file.
+Create a database:
 
 ```sql
 CREATE DATABASE shop_management;
 ```
 
-Ensure that the database models and Sequelize configuration are initialized correctly before starting the application.
+Exit the MySQL shell:
 
-### 5. Run the application
+```sql
+EXIT;
+```
 
-Start the application using the script defined in `package.json`. For example, if a `start` script is configured:
+Use the database name and credentials that match your local MySQL configuration.
+
+### 4. Configure environment variables
+
+Create a `.env` file in the project root directory.
+
+Example:
+
+```ini
+PORT=3000
+
+DB_NAME=shop_management
+DB_USER=your_mysql_username
+DB_PASSWORD=your_mysql_password
+DB_HOST=localhost
+DB_PORT=3306
+
+SESSION_SECRET=replace_with_a_long_random_secret
+
+BASE_URL=http://localhost:3000
+
+EMAIL_USER=your_email@example.com
+EMAIL_PASSWORD=your_email_app_password
+```
+
+Replace the example values with your own configuration.
+
+**Important:** Never commit your real `.env` file, database passwords, session secrets, or email credentials to GitHub.
+
+Make sure `.env` is included in `.gitignore`. You can provide a `.env.example` file containing placeholder values for other developers.
+
+> Keep only the environment variables actually used by your application. Variable names must match those referenced in your source code.
+
+### 5. Start the application
+
+Check `package.json` for the available scripts.
+
+If the project defines a start script:
 
 ```bash
 npm start
 ```
 
-For development with Nodemon, if the corresponding script is configured:
+If it uses Nodemon for development, run the development script defined in `package.json`, for example:
 
 ```bash
 npm run dev
 ```
 
-Open the application at `http://localhost:3000`, or use the port configured in your environment.
+If neither script exists, use the actual application entry file, such as:
+
+```bash
+node app.js
+```
+
+Replace `app.js` with the correct entry filename if necessary.
+
+### 6. Open the application
+
+If the server is configured to use port 3000, open:
+
+http://localhost:3000
+
+Make sure the MySQL server is running and the database credentials are correct before starting the application.
+
+## Usage
+
+### Product Management
+
+- Browse available products.
+- View product details.
+- Add products through the product management interface, if supported.
+- Manage product information according to the application's available routes.
+
+### Shopping Cart
+
+- Add products to the shopping cart.
+- View cart items.
+- Review quantities and the total price.
+- Remove items from the cart, if supported.
+
+### User Authentication
+
+- Log in using an existing account.
+- Access protected pages after authentication.
+- Log out to terminate the current session.
+- Complete email verification if required by the registration workflow.
+
+The exact routes and available actions depend on the current implementation.
+
+## Project Structure
+
+The application uses a modular structure to separate responsibilities.
+
+```text
+Shop_management/
+├── Controller/       # Request handling and application logic
+├── Module/           # Data models and database operations
+├── Middleware/       # Authentication and authorization
+├── Helpers/          # Shared utility functions
+├── views/            # Pug templates
+├── public/            # CSS and static assets
+├── .env.example       # Example environment configuration
+├── .gitignore
+├── package.json
+└── README.md
+```
+
+This is an illustrative structure. Adjust the folder names to match the actual repository.
+
+## Troubleshooting
+
+### Database connection errors
+
+- Verify that MySQL is running.
+- Check `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER`, and `DB_PASSWORD`.
+- Confirm that the database exists and the database user has the required permissions.
+
+### Missing environment variables
+
+- Make sure `.env` exists in the project root.
+- Confirm that `dotenv` is loaded before the environment variables are accessed.
+- Check that variable names match the source code exactly.
+
+### Port already in use
+
+Change `PORT` in `.env` if the application supports environment-based port configuration, then restart the server.
+
+### Dependencies or startup errors
+
+Run `npm install`, inspect the error message, and verify the start scripts in `package.json`.
+
+## Future Improvements
+
+- Order creation and order history.
+- Inventory and stock management.
+- Product search, filtering, sorting, and pagination.
+- Customer and administrator roles.
+- Input validation and centralized error handling.
+- Automated tests for authentication, products, and shopping cart operations.
+- Deployment and production configuration.
 
 ## Learning Objectives
 
 This project provides practical experience with:
 
-- Building a web application using Node.js and Express.js.
-- Organizing an application using routes, controllers, models, and middleware.
-- Working with relational databases and Sequelize ORM.
-- Implementing authentication and session management.
-- Securing user passwords and managing sensitive environment variables.
-- Integrating email functionality into a backend application.
-- Rendering dynamic pages with Pug and styling them with CSS.
+- Building web applications using Express.js.
+- Organizing controllers, models, routes, and middleware.
+- Working with relational databases through Sequelize.
+- Implementing session-based authentication.
+- Securing passwords and handling email verification.
+- Managing environment variables and application configuration.
 
-## Future Improvements
+## License
 
-- Improve input validation and error handling.
-- Add automated tests for routes and business logic.
-- Improve the user interface and responsive design.
-- Add product search, filtering, and pagination.
-- Strengthen authentication and authorization.
-- Improve deployment configuration and documentation.
-
-## Author
-
-**Nguyễn Hữu Nguyên**
-
-GitHub: [@genhakiyama](https://github.com/genhakiyama)
-
----
-
-*This project is being developed as a practical learning project for backend development and shop management workflows.*
+Add the license applicable to this project before distributing or reusing the code.
