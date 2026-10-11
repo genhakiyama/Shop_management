@@ -1,4 +1,4 @@
-extends layouts/header.pug
+extends ../layouts/header.pug
 
 block styles
   link(rel="preconnect", href="https://fonts.googleapis.com")
@@ -34,7 +34,7 @@ block content
           if error
             p.form-error= error
 
-          form.login-form(action="/profile/login", method="POST")
+          form.login-form(action="/auth/login", method="POST")
             .field
               label(for="email") Email
               input#email(type="email", name="email", placeholder="you@example.com", value=email || "", required)
@@ -53,4 +53,4 @@ block content
 
           p.login-switch
             | New here?
-            a.link(href="/profile/signup")  Create an account →
+            a.link(href="/auth/signup")  Create an account →

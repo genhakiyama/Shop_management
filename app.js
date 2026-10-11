@@ -20,6 +20,7 @@ const path = require('path');
     const shopRoute = require('./Routes/shop');
     const cartRoute = require('./Routes/Cart');
     const UserRoute = require('./Routes/Users.js');
+    const AuthenRoute = require('./Routes/Authentication.js');
 
 /* Sessions and Cookie */
     const session = require('express-session');
@@ -88,11 +89,11 @@ app.use(cookieParser());
             });
     });
 
-
-app.use('/admin' , isAuth , adminRoute);
+app.use('/auth' , AuthenRoute);
 app.use('/shop' , shopRoute);
+app.use('/admin' , isAuth , adminRoute);
 app.use('/cart' , isAuth , cartRoute);
-app.use('/profile' , UserRoute);
+app.use('/profile' , isAuth , UserRoute);
 
 sequelize.sync({force : false})
     .then(result => {

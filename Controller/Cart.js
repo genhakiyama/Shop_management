@@ -25,7 +25,7 @@ exports.cargoList = (req , res , next) => {
             fetchedCart = cart;
             return cart.getProducts()
                             .then(products => {                          
-                                res.render('my-cart' , {prods : products , total : fetchedCart.total , pageTitle : 'My cart' , path : '/my-cart' , isVerified : req.session.isLoggedIn});
+                                res.render('cart/my-cart' , {prods : products , total : fetchedCart.total , pageTitle : 'My cart', isVerified : req.session.isLoggedIn});
                             })
         })
         .catch(err => {
