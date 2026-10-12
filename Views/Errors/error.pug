@@ -1,8 +1,11 @@
-extends layouts/header
+extends ../layouts/header
+
+block styles 
+  link(rel='stylesheet', href='/css/error.css')
+  link(rel = "stylesheet" , href = "/css/errors.css")
 
 block content
-  link(rel='stylesheet', href='/css/error.css')
-
+  
   main.error-page
     .error-card
       .error-title-bar
@@ -14,7 +17,7 @@ block content
       .error-body
         .error-icon !
         h1.error-heading Something went wrong
-        p.error-message= errorMessage
+        p.error-message= message
         .error-actions
-          a.error-btn(href='/profile') Go back
+          a.error-btn(href='/auth') Go back
           a.error-btn.error-btn-alt(href='/home') Home

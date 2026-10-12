@@ -1,0 +1,109 @@
+const User = require('../Module/user');
+const bcrypt = require('bcrypt');
+const crypto = require('crypto');
+
+const EmailHelper = require('../Helpers/Email');
+const TokenHelper = require('../Helpers/Token');
+
+exports.log = (req , res , next) => {
+    if (req.session.isLoggedIn) return res.redirect(`/profile/viewprofile/${req.session.userID}`);
+    else {
+        res.render('Authentication/Login' , {pageTtle : 'LOG IN'});
+    }
+};
+
+exports.createProfile = (req , res , next) => {
+    res.render('Authentication/signup' , {pageTitle : 'SIGN UP' , path : '/signup'});
+};
+
+exports.postProfile = (req , res , next) => {
+    const {username , email , password , imageProfile} = req.body;
+    const {token , hashedToken} = TokenHelper.generateToken();
+    let fetchUser;
+    User.findOne({
+        where : {
+            username : username
+        }})
+        .then(user => {
+            if (!user) {
+                return bcrypt.hash(password , 12)
+                            .then(hashedPassword => {   
+                                return User.create({
+                                    username , 
+                                    email , 
+                                    password : hashedPassword ,
+                                    imageProfile , 
+                                    isVerified : false , 
+                                    verificationToken : hashedToken , 
+                                    verificationTokenExpires : 
+                                        new Date(Date.now() + 15 * 60 * 10000)
+                                });
+                            })
+                            .then(user => {
+                                fetchUser = user  ;
+                                res.status(201).render('Email/check-email' , {PageTitle : 'Verify your email' , email});
+                                return EmailHelper.sendVerification(email , token);
+                            })
+                            .catch(err => {
+                                console.log(err);
+                            });
+            }
+            return res.status(409).render('Errors/error' , {errorMessage : "Username has been used"});
+        });
+};
+
+exports.getVerifyEmail = (req , res , next) => {
+    const { token } = req.query;
+
+    if (!token || typeof token !== 'string') {
+        return res.status(404).render('Errors/error' , {errorMessage : 'Invalid verification link'});
+    }
+
+    const hashedToken = crypto 
+                            .createHash('sha256')
+                            .update(token)
+                            .digest('hex');
+
+    User.findOne({
+        where : {
+            verificationToken : hashedToken
+        }})
+        .then(user => {
+            if (!user || !user.verificationToken || user.verificationTokenExpires <= new Date()) 
+                return res.status(400).render('Errors/error' , {errorMessage : 'Invalid or expired verification link'});
+
+            return user.update({
+                isVerified : true , 
+                verificationToken : null , 
+                verificationTokenExpires : null
+            });
+        })
+        .then(user => {
+            if (!user) return;
+            req.session.isLoggedIn = true;
+            req.session.userID = user.id;
+            user.createCart();
+            return res.send('Email verified sucessfully');
+        })
+};
+
+exports.verifyAccount = (req , res , next) => {
+    User.findOne({
+            where : {
+                email : req.body.email  
+            }
+        })
+        .then(user => {
+            if (!user || !user.isVerified) return res.redirect('/auth');
+            return bcrypt.compare(req.body.password , user.password)
+                            .then(isMatch => {
+                                if (!isMatch) return res.redirect('/auth'); 
+                                req.session.isLoggedIn = true;
+                                req.session.userID = user.id;
+                                return res.redirect(`/profile/viewprofile/${user.id}`);
+                            });
+        })
+        .catch(err => {
+            console.log(err);
+        });
+};

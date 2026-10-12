@@ -1,4 +1,4 @@
-extends layouts/header
+extends ../layouts/header
 
 block content
   link(rel="stylesheet", href="/css/CheckEmail.css")
@@ -24,5 +24,5 @@ block content
         li Make sure the address above is spelled correctly.
 
       .check-email__actions
-        a.btn.btn--primary(href="/profile") Go to login
-        a.btn.btn--ghost(href="/profile/signup") Use a different email
+        a.btn.btn--primary(href="/auth") Go to login
+        a.btn.btn--ghost(href="/auth/signup") Use a different email
