@@ -8,12 +8,12 @@ const TokenHelper = require('../Helpers/Token');
 exports.log = (req , res , next) => {
     if (req.session.isLoggedIn) return res.redirect(`/profile/viewprofile/${req.session.userID}`);
     else {
-        res.render('Authentication/Login' , {pageTtle : 'LOG IN' , path : '/Authentication/Login'});
+        res.render('Authentication/Login' , {pageTtle : 'LOG IN'});
     }
 };
 
 exports.createProfile = (req , res , next) => {
-    res.render('signup' , {pageTitle : 'SIGN UP' , path : '/signup'});
+    res.render('Authentication/signup' , {pageTitle : 'SIGN UP' , path : '/signup'});
 };
 
 exports.postProfile = (req , res , next) => {
@@ -22,7 +22,7 @@ exports.postProfile = (req , res , next) => {
     let fetchUser;
     User.findOne({
         where : {
-            email : email
+            username : username
         }})
         .then(user => {
             if (!user) {
@@ -94,10 +94,10 @@ exports.verifyAccount = (req , res , next) => {
             }
         })
         .then(user => {
-            if (!user || !user.isVerified) return res.redirect('/profile');
+            if (!user || !user.isVerified) return res.redirect('/auth');
             return bcrypt.compare(req.body.password , user.password)
                             .then(isMatch => {
-                                if (!isMatch) return res.redirect('/profile'); 
+                                if (!isMatch) return res.redirect('/auth'); 
                                 req.session.isLoggedIn = true;
                                 req.session.userID = user.id;
                                 return res.redirect(`/profile/viewprofile/${user.id}`);

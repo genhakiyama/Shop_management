@@ -1,7 +1,10 @@
 {
-  "name": "node-start",
+  "name": "node_module",
   "version": "1.0.0",
-  "description": "",
+  "description": "Product Mangament website for Shopkeepers Please download nodemodules in nodeJS_learning before install this repo",
+  "keywords": [
+    "Node_module"
+  ],
   "homepage": "https://github.com/genhakiyama/Nodejs_learning#readme",
   "bugs": {
     "url": "https://github.com/genhakiyama/Nodejs_learning/issues"
@@ -11,7 +14,7 @@
     "url": "git+https://github.com/genhakiyama/Nodejs_learning.git"
   },
   "license": "ISC",
-  "author": "",
+  "author": "Nguyen",
   "type": "commonjs",
   "main": "Testing.js",
   "scripts": {
@@ -25,9 +28,10 @@
     "cookie-parser": "^1.4.7",
     "csrf-csrf": "^4.0.3",
     "dotenv": "^18.0.7",
-    "express": "^5.2.1",
+    "express": "^5.3.0",
     "express-mysql-session": "^3.0.3",
     "express-session": "^1.19.0",
+    "express-validator": "^7.3.2",
     "mysql2": "^3.24.5",
     "nodemailer": "^10.1.0",
     "pug": "^3.0.4",

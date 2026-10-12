@@ -1,0 +1,9 @@
+
+if (message)
+    .error-container
+        .error-card
+            .error-icon !
+            h2.error-title= title || 'Something went wrong'
+            p.error-message= message || 'An unexpected error occurred.'
+            if code
+                span.error-code= code

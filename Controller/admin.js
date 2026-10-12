@@ -2,7 +2,12 @@ const { Op } = require('sequelize');
 const Product = require('../Module/Product');
 
 exports.getAddProduct = (req , res , next) => {
-    res.render('Admin/add-product' , {pageTitle : 'Add product', isVerified : req.session.isLoggedIn});
+    res.render('Admin/add-product' , 
+        {pageTitle : 'Add product',
+        isVerified : req.session.isLoggedIn , 
+        errors : {} , 
+        oldInput : {}
+    });
 };
 
 exports.postProduct = (req , res , next) => {
@@ -35,25 +40,10 @@ exports.postProduct = (req , res , next) => {
             });
 };
 
-exports.EditProduct = (req , res , next) => {
+exports.EditProduct = async (req , res , next) => {
     const editMode = req.query.edit;
-    const id = req.params.productID;
-    req.user
-        .getProducts({
-            where : {
-                id : id 
-            }
-        }).
-        then(products => {
-            if (!products) return res.redirect('/home');
-            return products[0];
-        })
-        .then(prod => {
-             res.render('Admin/edit-product' , {product : prod , pageTittle : 'Edit product' , path : '/edit-product' , editing : editMode , isVerified : req.session.isLoggedIn});
-        })
-        .catch(err => {
-            console.log(err);
-        });
+    const prod = req.product;
+    res.render('Admin/edit-product' , {product : prod , pageTittle : 'Edit product' , path : '/edit-product' , editing : editMode , isVerified : req.session.isLoggedIn});
 };
 
 exports.RemoveProduct = (req , res , next) => {
